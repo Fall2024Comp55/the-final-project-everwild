@@ -14,6 +14,8 @@ public class MainApplication extends GraphicsProgram{
 	private WelcomePane welcomePane;
 	private DescriptionPane descriptionPane;
 	private GraphicsPane currentScreen;
+	//private TrainingPane trainingPane;     // add training
+    //private BattlePane battlePane;         // add battle pane
 
 
 	public MainApplication() {
@@ -37,7 +39,8 @@ public class MainApplication extends GraphicsProgram{
 		//Initialize all Panes
 		welcomePane = new WelcomePane(this);
 		descriptionPane = new DescriptionPane(this);
-
+		//trainingPane = new TrainingPane(this);   // NEW
+	    //battlePane = new BattlePane(this);       // NEW
 		//TheDefaultPane
 		switchToScreen(welcomePane);
 	}
