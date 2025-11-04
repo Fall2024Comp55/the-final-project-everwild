@@ -3,9 +3,9 @@ import acm.graphics.*;
 
 public class DifficultyPane extends GraphicsPane {
 	
-    private GImage babyBtn;
-    private GImage childBtn;
-    private GImage normalBtn;
+    private GImage babyButton;
+    private GImage childButton;
+    private GImage normalButton;
 
     public DifficultyPane(MainApplication mainApplication) {
         this.mainScreen = mainApplication;
@@ -26,19 +26,19 @@ public class DifficultyPane extends GraphicsPane {
 
     private void addOptions() {
         // Baby
-        babyBtn = new GImage("baby.png", 250, 200);
-        contents.add(babyBtn);
-        mainScreen.add(babyBtn);
+        babyButton = new GImage("baby.png", 250, 200);
+        contents.add(babyButton);
+        mainScreen.add(babyButton);
 
         // Child
-        childBtn = new GImage("child.png", 450, 200);
-        contents.add(childBtn);
-        mainScreen.add(childBtn);
+        childButton = new GImage("child.png", 450, 200);
+        contents.add(childButton);
+        mainScreen.add(childButton);
 
         // Normal
-        normalBtn = new GImage("normal.png", 650, 200);
-        contents.add(normalBtn);
-        mainScreen.add(normalBtn);
+        normalButton = new GImage("normal.png", 650, 200);
+        contents.add(normalButton);
+        mainScreen.add(normalButton);
     }
 
     @Override
@@ -46,17 +46,17 @@ public class DifficultyPane extends GraphicsPane {
         GObject clicked = mainScreen.getElementAtLocation(e.getX(), e.getY());
         if(clicked == null) return;
 
-        if(clicked == babyBtn) {
+        if(clicked == babyButton) {
             mainScreen.setDifficulty(Difficulty.BABY);
-            System.out.println("Difficulty set → BABY");
+            System.out.println("BABY");
         }
-        else if(clicked == childBtn) {
+        else if(clicked == childButton) {
             mainScreen.setDifficulty(Difficulty.CHILD);
-            System.out.println("Difficulty set → CHILD");
+            System.out.println("CHILD");
         }
-        else if(clicked == normalBtn) {
+        else if(clicked == normalButton) {
             mainScreen.setDifficulty(Difficulty.NORMAL);
-            System.out.println("Difficulty set → NORMAL");
+            System.out.println("NORMAL");
         }
     }
 }
