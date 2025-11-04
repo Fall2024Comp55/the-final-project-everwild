@@ -42,12 +42,14 @@ public class MainApplication extends GraphicsProgram{
 		//Initialize all Panes
 		welcomePane = new WelcomePane(this);
 		descriptionPane = new DescriptionPane(this);
-		//trainingPane = new TrainingPane(this);   // NEW
-	    //battlePane = new BattlePane(this);       // NEW
 		startPane = new StartPane(this);
+		difficultyPane = new DifficultyPane(this);
+
 		//TheDefaultPane
 		//switchToScreen(welcomePane);
 		switchToScreen(startPane); //our start screen
+		//trainingPane = new TrainingPane(this);   // NEW
+	    //battlePane = new BattlePane(this);       // NEW
 	}
 	
 	public static void main(String[] args) {
