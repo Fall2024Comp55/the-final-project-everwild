@@ -30,7 +30,7 @@ public class StartPane extends GraphicsPane{
 	}
 	
 	private void addStartButton() {
-		GImage startButton=new GImage("startButton.png", 300,300);
+		GImage startButton=new GImage("startButton.png", 440,450);
 		contents.add(startButton);
 		mainScreen.add(startButton);
 		
@@ -38,11 +38,15 @@ public class StartPane extends GraphicsPane{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 	    GObject clicked = mainScreen.getElementAtLocation(e.getX(), e.getY());
+	    System.out.println("Clicked: " + clicked);
+
 	    if(clicked == null) return;
 
 	    if(clicked == startButton) {
+	        System.out.println("Start button clicked!");
 	        mainScreen.switchToWelcomeScreen();
 	    }
 	}
+
 
 }
