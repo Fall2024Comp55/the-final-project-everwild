@@ -7,13 +7,15 @@ import java.awt.event.MouseEvent;
 
 public class MainApplication extends GraphicsProgram{
 	//Settings
-	public static final int WINDOW_WIDTH = 800;
+	public static final int WINDOW_WIDTH = 1000;
 	public static final int WINDOW_HEIGHT = 600;
 	
 	//List of all the full screen panes
 	private WelcomePane welcomePane;
 	private DescriptionPane descriptionPane;
 	private GraphicsPane currentScreen;
+	private StartPane startPane;
+	private DifficultyPane difficultyPane;
 	//private TrainingPane trainingPane;     // add training
     //private BattlePane battlePane;         // add battle pane
 
@@ -41,8 +43,10 @@ public class MainApplication extends GraphicsProgram{
 		descriptionPane = new DescriptionPane(this);
 		//trainingPane = new TrainingPane(this);   // NEW
 	    //battlePane = new BattlePane(this);       // NEW
+		startPane = new StartPane(this);
 		//TheDefaultPane
-		switchToScreen(welcomePane);
+		//switchToScreen(welcomePane);
+		switchToScreen(startPane); //our start screen
 	}
 	
 	public static void main(String[] args) {
@@ -58,6 +62,9 @@ public class MainApplication extends GraphicsProgram{
 		switchToScreen(welcomePane);
 	}
 	
+	public void switchToDifficultyScreen() {
+		switchToScreen(difficultyPane);
+	}
 	
 	protected void switchToScreen(GraphicsPane newScreen) {
 		if(currentScreen != null) {
@@ -126,5 +133,7 @@ public class MainApplication extends GraphicsProgram{
 			currentScreen.keyTyped(e);
 		}
 	}
+	
+	
 
 }
