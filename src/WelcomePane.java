@@ -43,9 +43,14 @@ public class WelcomePane extends GraphicsPane{
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		if (mainScreen.getElementAtLocation(e.getX(), e.getY()) == contents.get(1)) {
-			mainScreen.switchToDescriptionScreen();
-		}
+		GObject clicked = mainScreen.getElementAtLocation(e.getX(), e.getY());
+
+		if (clicked == null) return; // safety check
+		if(clicked == contents.get(1)) {
+	        mainScreen.switchToDifficultyScreen(); 
+	        // check if the clicked item is our button
+	    }
+		
 	}
 
 }
