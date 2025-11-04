@@ -4,7 +4,8 @@ import java.awt.event.MouseEvent;
 import acm.graphics.*;
 
 public class StartPane extends GraphicsPane{
-	
+	private GImage startButton;
+
 	public StartPane(MainApplication mainApplication) {
 		this.mainScreen=mainApplication;
 		
@@ -34,4 +35,14 @@ public class StartPane extends GraphicsPane{
 		mainScreen.add(startButton);
 		
 	}
+	@Override
+	public void mouseClicked(MouseEvent e) {
+	    GObject clicked = mainScreen.getElementAtLocation(e.getX(), e.getY());
+	    if(clicked == null) return;
+
+	    if(clicked == startButton) {
+	        mainScreen.switchToWelcomeScreen();
+	    }
+	}
+
 }
