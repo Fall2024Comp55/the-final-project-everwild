@@ -47,7 +47,7 @@ public class StartPane extends GraphicsPane{
 
 	    if(clicked == null) return;
 
-	    if(clicked == contents.get(0)) {
+	    if(clicked == contents.get(1)) {
 	        System.out.println("Start button clicked!");
 	        mainScreen.switchToDifficultyScreen();
 	    }
