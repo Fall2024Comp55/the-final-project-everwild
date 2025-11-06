@@ -88,6 +88,7 @@ public class MainApplication extends GraphicsProgram{
 	public void switchToDifficultyScreen() {
 		switchToScreen(difficultyPane);
 	}
+	
 	public void setDifficulty(Difficulty d) {
 	    this.difficulty = d;
 	}

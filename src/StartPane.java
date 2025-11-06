@@ -13,8 +13,12 @@ public class StartPane extends GraphicsPane{
 	
 	@Override
 	public void hideContent() {
-		
+        for(GObject item : contents) {
+            mainScreen.remove(item);
+        }
+        contents.clear();
 	}
+	
 	@Override
 	public void showContent() {
 		addBackground();
@@ -22,15 +26,16 @@ public class StartPane extends GraphicsPane{
 	}
 	
 	private void addBackground() {
-//		GImage background = new GImage("background.png",0,0);
+		GImage background = new GImage("BackgroundwithStartButton.jpeg",0,0);
 //		assuming background is properly sized to our game window
-//		
-//		contents.add(background);
-//		mainScreen.add(background);
+		background.scale(0.5);
+		contents.add(background);
+		mainScreen.add(background);
 	}
 	
 	private void addStartButton() {
-		GImage startButton=new GImage("startButton.png", 440,450);
+		GImage startButton=new GImage("Start1.png", 400,400);
+		startButton.scale(0.5);
 		contents.add(startButton);
 		mainScreen.add(startButton);
 		
@@ -44,7 +49,7 @@ public class StartPane extends GraphicsPane{
 
 	    if(clicked == contents.get(0)) {
 	        System.out.println("Start button clicked!");
-	       // mainScreen.switchToDifficultyScreen();
+	        mainScreen.switchToDifficultyScreen();
 	    }
 	}
 
