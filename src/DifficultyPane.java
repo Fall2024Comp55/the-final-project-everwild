@@ -49,14 +49,18 @@ public class DifficultyPane extends GraphicsPane {
         if(clicked == babyButton) {
             mainScreen.setDifficulty(Difficulty.BABY);
             System.out.println("BABY");
+            mainScreen.switchToStoryScreen();
         }
         else if(clicked == childButton) {
             mainScreen.setDifficulty(Difficulty.CHILD);
             System.out.println("CHILD");
+            mainScreen.switchToStoryScreen();
         }
         else if(clicked == normalButton) {
             mainScreen.setDifficulty(Difficulty.NORMAL);
             System.out.println("NORMAL");
+            mainScreen.switchToStoryScreen();
         }
+        
     }
 }
