@@ -13,8 +13,12 @@ public class StartPane extends GraphicsPane{
 	
 	@Override
 	public void hideContent() {
-		
+        for(GObject item : contents) {
+            mainScreen.remove(item);
+        }
+        contents.clear();
 	}
+	
 	@Override
 	public void showContent() {
 		addBackground();
@@ -44,7 +48,7 @@ public class StartPane extends GraphicsPane{
 
 	    if(clicked == contents.get(0)) {
 	        System.out.println("Start button clicked!");
-	       // mainScreen.switchToDifficultyScreen();
+	        mainScreen.switchToDifficultyScreen();
 	    }
 	}
 

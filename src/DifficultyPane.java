@@ -13,7 +13,7 @@ public class DifficultyPane extends GraphicsPane {
 
     @Override
     public void showContent() {
-        addOptions();
+        //addOptions();
     }
 
     @Override
