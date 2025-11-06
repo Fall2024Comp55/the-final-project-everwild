@@ -17,8 +17,10 @@ public class MainApplication extends GraphicsProgram{
 	private GraphicsPane currentScreen;
 	private StartPane startPane;
 	private DifficultyPane difficultyPane;
-	//private TrainingPane trainingPane;     // add training
-    //private BattlePane battlePane;         // add battle pane
+	private TrainingPane trainingPane;
+    private BattlePane battlePane;
+    private StoryPane storyPane;
+    private MonsterSelectPane monsterSelectPane;
 
 
 	public MainApplication() {
@@ -46,8 +48,9 @@ public class MainApplication extends GraphicsProgram{
 		difficultyPane = new DifficultyPane(this);
 
 		//TheDefaultPane
-		//switchToScreen(welcomePane);
+
 		switchToScreen(startPane); //our start screen
+		//switchToScreen(welcomePane);
 		//trainingPane = new TrainingPane(this);   // NEW
 	    //battlePane = new BattlePane(this);       // NEW
 	}
@@ -56,9 +59,26 @@ public class MainApplication extends GraphicsProgram{
 		new MainApplication().start();
 
 	}
+
 	
 	public void switchToDescriptionScreen() {
 		switchToScreen(descriptionPane);
+	}
+	
+	public void switchToStoryScreen() {
+		switchToScreen(storyPane);
+	}
+	
+	public void switchToMonsterSelectScreen() {
+		switchToScreen(monsterSelectPane);
+	}
+	
+	public void switchToBattleScreen() {
+		switchToScreen(battlePane);
+	}
+	
+	public void switchToTrainingScreen() {
+		switchToScreen(trainingPane);
 	}
 	
 	public void switchToWelcomeScreen() {
