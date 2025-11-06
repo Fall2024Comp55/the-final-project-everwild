@@ -10,6 +10,7 @@ public class StoryPane extends GraphicsPane{
 	
 	@Override
 	public void showContent() {
+		addBackground();
 	}
 
 	@Override
@@ -18,6 +19,16 @@ public class StoryPane extends GraphicsPane{
 			mainScreen.remove(item);
 		}
 		contents.clear();
+	}
+	private void addBackground() {
+		GImage background = new GImage("tempstorybackground.png");
+		contents.add(background);
+		
+	}
+	
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		mainScreen.switchToMonsterSelectScreen();
 	}
 }
 	
