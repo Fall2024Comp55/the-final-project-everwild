@@ -29,25 +29,23 @@ public class StartPane extends GraphicsPane{
 		GImage background = new GImage("BackgroundwithStartButton.jpeg",0,0);
 //		assuming background is properly sized to our game window
 		background.scale(0.5);
-		contents.add(background);
 		mainScreen.add(background);
 	}
 	
 	private void addStartButton() {
-		GImage startButton=new GImage("Start1Copy.png", 475,340);
+		startButton=new GImage("Start1Copy.png", 475,340);
 		startButton.scale(0.5);
-		contents.add(startButton);
 		mainScreen.add(startButton);
 		
 	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
 	    GObject clicked = mainScreen.getElementAtLocation(e.getX(), e.getY());
-	    System.out.println("Clicked: " + clicked);
+	    //System.out.println("Clicked: " + clicked);
 
 	    if(clicked == null) return;
 
-	    if(clicked == contents.get(1)) {
+	    if(clicked == startButton) {
 	        System.out.println("Start button clicked!");
 	        mainScreen.switchToDifficultyScreen();
 	    }
