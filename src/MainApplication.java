@@ -65,9 +65,16 @@ public class MainApplication extends GraphicsProgram{
 		switchToScreen(descriptionPane);
 	}
 	
+	//public void switchToStoryScreen() {
+	//	switchToScreen(storyPane);
+	//}
 	public void switchToStoryScreen() {
-		switchToScreen(storyPane);
+	    if (storyPane == null) {
+	        storyPane = new StoryPane(this);
+	    }
+	    switchToScreen(storyPane);
 	}
+
 	
 	public void switchToMonsterSelectScreen() {
 		switchToScreen(monsterSelectPane);

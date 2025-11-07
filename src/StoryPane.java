@@ -20,15 +20,16 @@ public class StoryPane extends GraphicsPane{
 		}
 		contents.clear();
 	}
+
 	private void addBackground() {
-		GImage background = new GImage("tempstorybackground.png");
-		contents.add(background);
-		
+	    GImage background = new GImage("tempstorybackground.png", 0, 0);
+	    contents.add(background);    
+	    mainScreen.add(background); 
 	}
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		mainScreen.switchToMonsterSelectScreen();
+		//mainScreen.switchToMonsterSelectScreen();
 	}
 }
 	
