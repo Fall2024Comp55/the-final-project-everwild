@@ -13,7 +13,7 @@ public class DifficultyPane extends GraphicsPane {
 
     @Override
     public void showContent() {
-        //addOptions();
+        addOptions();
     }
 
     @Override
@@ -26,17 +26,20 @@ public class DifficultyPane extends GraphicsPane {
 
     private void addOptions() {
         // Baby
-        babyButton = new GImage("baby.png", 250, 200);
+        babyButton = new GImage("baby.png", 100, 30);
+        babyButton.scale(0.5);
         contents.add(babyButton);
         mainScreen.add(babyButton);
 
         // Child
-        childButton = new GImage("child.png", 450, 200);
+        childButton = new GImage("child.png", 100, 200);
+        childButton.scale(0.5);
         contents.add(childButton);
         mainScreen.add(childButton);
 
         // Normal
-        normalButton = new GImage("normal.png", 650, 200);
+        normalButton = new GImage("normal.png", 100, 400);
+        normalButton.scale(0.5);
         contents.add(normalButton);
         mainScreen.add(normalButton);
     }
