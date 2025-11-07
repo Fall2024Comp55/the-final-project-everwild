@@ -2,7 +2,7 @@ import java.awt.event.MouseEvent;
 import acm.graphics.*;
 
 public class DifficultyPane extends GraphicsPane {
-	
+	private GImage background;
     private GImage babyButton;
     private GImage childButton;
     private GImage normalButton;
@@ -13,6 +13,7 @@ public class DifficultyPane extends GraphicsPane {
 
     @Override
     public void showContent() {
+    	addBackground();
         addOptions();
     }
 
@@ -22,6 +23,13 @@ public class DifficultyPane extends GraphicsPane {
             mainScreen.remove(item);
         }
         contents.clear();
+    }
+    private void addBackground() {
+        background = new GImage("tempstorybackground.png", 0, 0);
+        background.setSize(mainScreen.getWidth(), mainScreen.getHeight());
+
+        contents.add(background);
+        mainScreen.add(background);
     }
 
     private void addOptions() {
