@@ -34,7 +34,7 @@ public class StartPane extends GraphicsPane{
 	}
 	
 	private void addStartButton() {
-		GImage startButton=new GImage("Start1.png", 475,340);
+		GImage startButton=new GImage("Start1Copy.png", 475,340);
 		startButton.scale(0.5);
 		contents.add(startButton);
 		mainScreen.add(startButton);
