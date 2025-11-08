@@ -30,12 +30,15 @@ public class StartPane extends GraphicsPane{
 //		assuming background is properly sized to our game window
 		background.scale(0.5);
 		mainScreen.add(background);
+		contents.add(background);
 	}
 	
 	private void addStartButton() {
 		startButton=new GImage("Start1Copy.png", 475,340);
 		startButton.scale(0.5);
 		mainScreen.add(startButton);
+		contents.add(startButton);
+		
 		
 	}
 	@Override
