@@ -29,7 +29,7 @@ public class StoryPane extends GraphicsPane{
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		//mainScreen.switchToMonsterSelectScreen();
+		mainScreen.switchToMonsterSelectScreen();
 	}
 }
 	

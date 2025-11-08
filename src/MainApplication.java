@@ -46,7 +46,8 @@ public class MainApplication extends GraphicsProgram{
 		descriptionPane = new DescriptionPane(this);
 		startPane = new StartPane(this);
 		difficultyPane = new DifficultyPane(this);
-
+		monsterSelectPane = new MonsterSelectPane(this);
+		storyPane = new StoryPane(this);
 		//TheDefaultPane
 
 		switchToScreen(startPane); //our start screen
@@ -65,16 +66,9 @@ public class MainApplication extends GraphicsProgram{
 		switchToScreen(descriptionPane);
 	}
 	
-	//public void switchToStoryScreen() {
-	//	switchToScreen(storyPane);
-	//}
 	public void switchToStoryScreen() {
-	    if (storyPane == null) {
-	        storyPane = new StoryPane(this);
-	    }
-	    switchToScreen(storyPane);
+		switchToScreen(storyPane);
 	}
-
 	
 	public void switchToMonsterSelectScreen() {
 		switchToScreen(monsterSelectPane);
