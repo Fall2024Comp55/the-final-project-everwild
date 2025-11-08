@@ -25,7 +25,7 @@ public class DifficultyPane extends GraphicsPane {
         contents.clear();
     }
     private void addBackground() {
-        background = new GImage("tempstorybackground.png", 0, 0);
+        background = new GImage("Difficulty background.jpeg", 0, 0);
         background.setSize(mainScreen.getWidth(), mainScreen.getHeight());
 
         contents.add(background);
@@ -34,19 +34,19 @@ public class DifficultyPane extends GraphicsPane {
 
     private void addOptions() {
         // Baby
-        babyButton = new GImage("baby.png", 100, 30);
+        babyButton = new GImage("Baby.jpeg", 100, 110);
         babyButton.scale(0.5);
         contents.add(babyButton);
         mainScreen.add(babyButton);
 
         // Child
-        childButton = new GImage("child.png", 100, 200);
+        childButton = new GImage("Child.jpeg", 100, 250);
         childButton.scale(0.5);
         contents.add(childButton);
         mainScreen.add(childButton);
 
         // Normal
-        normalButton = new GImage("normal.png", 100, 400);
+        normalButton = new GImage("Normal.jpeg", 100, 400);
         normalButton.scale(0.5);
         contents.add(normalButton);
         mainScreen.add(normalButton);
