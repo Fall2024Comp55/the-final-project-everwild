@@ -12,6 +12,7 @@ public class MainApplication extends GraphicsProgram{
 	
 	//List of all the full screen panes
 	private Difficulty difficulty;
+	private int turnsRemaining;
 	private WelcomePane welcomePane;
 	private DescriptionPane descriptionPane;
 	private GraphicsPane currentScreen;
@@ -92,6 +93,13 @@ public class MainApplication extends GraphicsProgram{
 	
 	public void setDifficulty(Difficulty d) {
 	    this.difficulty = d;
+	}
+	
+	public void setTurnsRemaining(int turns) {
+		turnsRemaining=turns;
+	}
+	public int getTurnsRemaining() {
+		return turnsRemaining;
 	}
 
 	protected void switchToScreen(GraphicsPane newScreen) {

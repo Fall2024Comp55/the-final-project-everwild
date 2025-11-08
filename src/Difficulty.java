@@ -9,4 +9,7 @@ public enum Difficulty {
 	private Difficulty(int Turns) {
 		this.Turns=Turns;
 	}
+	public int getTurns () {
+		return Turns;
+	}
 }
