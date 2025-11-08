@@ -35,19 +35,19 @@ public class DifficultyPane extends GraphicsPane {
     private void addOptions() {
         // Baby
         babyButton = new GImage("Baby.jpeg", 100, 110);
-        babyButton.scale(0.5);
+        babyButton.scale(0.4);
         contents.add(babyButton);
         mainScreen.add(babyButton);
 
         // Child
         childButton = new GImage("Child.jpeg", 100, 250);
-        childButton.scale(0.5);
+        childButton.scale(0.4);
         contents.add(childButton);
         mainScreen.add(childButton);
 
         // Normal
         normalButton = new GImage("Normal.jpeg", 100, 400);
-        normalButton.scale(0.5);
+        normalButton.scale(0.4);
         contents.add(normalButton);
         mainScreen.add(normalButton);
     }

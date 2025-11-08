@@ -26,7 +26,7 @@ public class StartPane extends GraphicsPane{
 	}
 	
 	private void addBackground() {
-		GImage background = new GImage("BackgroundwithStartButton.jpeg",0,0);
+		GImage background = new GImage("BackgroundwithoutStartButton.png",0,0);
 //		assuming background is properly sized to our game window
 		background.scale(0.5);
 		mainScreen.add(background);
