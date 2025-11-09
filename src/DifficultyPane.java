@@ -61,19 +61,19 @@ public class DifficultyPane extends GraphicsPane {
             mainScreen.setDifficulty(Difficulty.BABY);
             mainScreen.setTurnsRemaining(Difficulty.BABY.getTurns());
             System.out.println("BABY");
-            mainScreen.switchToStoryScreen();
+            mainScreen.switchToMonsterSelectScreen();
         }
         else if(clicked == childButton) {
             mainScreen.setDifficulty(Difficulty.CHILD);
             mainScreen.setTurnsRemaining(Difficulty.CHILD.getTurns());
             System.out.println("CHILD");
-            mainScreen.switchToStoryScreen();
+            mainScreen.switchToMonsterSelectScreen();
         }
         else if(clicked == normalButton) {
             mainScreen.setDifficulty(Difficulty.NORMAL);
             mainScreen.setTurnsRemaining(Difficulty.NORMAL.getTurns());
             System.out.println("NORMAL");
-            mainScreen.switchToStoryScreen();
+            mainScreen.switchToMonsterSelectScreen();
         }
         
     }
