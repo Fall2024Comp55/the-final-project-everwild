@@ -20,6 +20,7 @@ public class MainApplication extends GraphicsProgram{
 	private DifficultyPane difficultyPane;
 	private TrainingPane trainingPane;
     private BattlePane battlePane;
+    private RestPane restPane;
     private StoryPane storyPane;
     private TurnsPane turnsPane;
     private Monster monster;
@@ -58,6 +59,7 @@ public class MainApplication extends GraphicsProgram{
 		//switchToScreen(welcomePane);
 		trainingPane = new TrainingPane(this);
 	    battlePane = new BattlePane(this);
+	    restPane = new RestPane(this);
 	}
 	
 	public static void main(String[] args) {
@@ -92,6 +94,9 @@ public class MainApplication extends GraphicsProgram{
 	
 	public void switchToWelcomeScreen() {
 		switchToScreen(welcomePane);
+	}
+	public void switchToRestScreen() {
+	    switchToScreen(restPane);
 	}
 	
 	public void switchToDifficultyScreen() {

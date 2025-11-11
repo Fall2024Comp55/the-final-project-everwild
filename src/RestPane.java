@@ -1,31 +1,31 @@
 import java.awt.event.MouseEvent;
 import acm.graphics.*;
 
-public class BattlePane extends GraphicsPane {
+public class RestPane extends GraphicsPane {
 
     private GImage background;
-    private GImage battleButton;
+    private GImage restButton;
 
-    public BattlePane(MainApplication mainScreen) {
+    public RestPane(MainApplication mainScreen) {
         this.mainScreen = mainScreen;
     }
 
     @Override
     public void showContent() {
-        System.out.println("SHOW BATTLE PANE");
+        System.out.println("SHOW REST PANE");
 
-        background = new GImage("BattleBackground.jpeg");
+        background = new GImage("RestBackground.jpeg");
         background.setLocation(0, 0);
         background.setSize(mainScreen.getWidth(), mainScreen.getHeight());
 
-        battleButton = new GImage("Battle Button.jpeg");
-        battleButton.setLocation(500, 400);
+        restButton = new GImage("Rest Button.jpeg");
+        restButton.setLocation(500, 400);
 
         contents.add(background);
-        contents.add(battleButton);
+        contents.add(restButton);
 
         mainScreen.add(background);
-        mainScreen.add(battleButton);
+        mainScreen.add(restButton);
     }
 
     @Override
@@ -41,8 +41,9 @@ public class BattlePane extends GraphicsPane {
         GObject clicked = mainScreen.getElementAtLocation(e.getX(), e.getY());
         if (clicked == null) return;
 
-        if (clicked == battleButton) {
-            System.out.println("Combat starting!");
+        if (clicked == restButton) {
+            System.out.println("REST → BATTLE");
+            mainScreen.switchToBattleScreen();
         }
     }
 }

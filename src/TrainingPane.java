@@ -36,10 +36,10 @@ public class TrainingPane extends GraphicsPane{
 	}
 	
 	private void addButtons() {
-		leftButton = new GImage("tempTrainingButtons.png");
+		leftButton = new GImage("Train Button.jpeg");
 		rightButton = new GImage("tempTrainingButtons.png");
 		selectButton = new GImage(button.toString());
-		selectButton.setLocation(450, 400);
+		selectButton.setLocation(500, 400);
 		leftButton.setLocation(selectButton.getX()-110, selectButton.getY());
 		rightButton.setLocation(selectButton.getX()+110, selectButton.getY());
 		contents.add(leftButton);
@@ -51,7 +51,7 @@ public class TrainingPane extends GraphicsPane{
 		
 	}
 	private void addBackground() {
-		background = new GImage("tempTrainingScreen.png");
+		background = new GImage("BattleBackground.jpeg");
 		contents.add(background);
 		mainScreen.add(background);
 	}
@@ -161,7 +161,7 @@ public class TrainingPane extends GraphicsPane{
 				}
 				case TRAIN:{
 					button=TrainingButton.STRENGTH;
-					selectButton.setImage(button.toString());
+					//selectButton.setImage(button.toString());
 				}
 				case STRENGTH:{
 					trainStrength();
@@ -174,7 +174,7 @@ public class TrainingPane extends GraphicsPane{
 				}
 				case BACK:{
 					button=TrainingButton.TRAIN;
-					selectButton.setImage(button.toString());
+					//selectButton.setImage(button.toString());
 				}
 			}
 				
