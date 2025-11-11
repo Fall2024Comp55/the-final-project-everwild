@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.lang.foreign.AddressLayout;
 
@@ -27,14 +28,19 @@ public class TurnsPane extends GraphicsPane{
 	}
 	
 	private void addBackground() {
-		background=new GImage("Child.jpeg");
+		background=new GImage("tempTurnScreen.png");
 		mainScreen.add(background);
+		contents.add(background);
 	}
 	
 	private void addTurnCount() {
-		turnCount = new GLabel(""+mainScreen.getTurnsRemaining());
+		turnCount = new GLabel(""+mainScreen.getTurnsRemaining(), 450, 500);
+		System.out.println(mainScreen.getTurnsRemaining());
 		turnCount.setFont("papyrus");
+		turnCount.setColor(Color.black);
+		turnCount.scale(3);
 		mainScreen.add(turnCount);
+		contents.add(turnCount);
 	}
 	
 	@Override

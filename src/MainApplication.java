@@ -22,7 +22,8 @@ public class MainApplication extends GraphicsProgram{
     private BattlePane battlePane;
     private StoryPane storyPane;
     private TurnsPane turnsPane;
-    private MonsterSelectPane monsterSelectPane;
+    private Monster monster;
+	private MonsterSelectPane monsterSelectPane;
 
 
 	public MainApplication() {
@@ -176,6 +177,13 @@ public class MainApplication extends GraphicsProgram{
 		}
 	}
 	
-	
+	  public Monster getMonster() {
+			return monster;
+		}
+
+		public void setMonster(Monster monster) {
+			this.monster = monster;
+		}
+
 
 }
