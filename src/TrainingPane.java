@@ -51,7 +51,7 @@ public class TrainingPane extends GraphicsPane{
 		
 	}
 	private void addBackground() {
-		background = new GImage("BattleBackground.jpeg");
+		background = new GImage("Train.jpeg");
 		contents.add(background);
 		mainScreen.add(background);
 	}
