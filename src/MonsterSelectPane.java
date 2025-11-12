@@ -57,15 +57,15 @@ public class MonsterSelectPane extends GraphicsPane {
 
         if (clicked == monster1) {
             System.out.println("Monster 1 selected!");
-            mainScreen.switchToStoryScreen();
+            mainScreen.switchToTurnsScreen();
         } 
         else if (clicked == monster2) {
             System.out.println("Monster 2 selected!");
-            mainScreen.switchToStoryScreen();
+            mainScreen.switchToTurnsScreen();
         } 
         else if (clicked == monster3) {
             System.out.println("Monster 3 selected!");
-            mainScreen.switchToStoryScreen();
+            mainScreen.switchToTurnsScreen();
         }
     }
 }
