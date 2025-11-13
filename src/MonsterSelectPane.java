@@ -18,7 +18,7 @@ public class MonsterSelectPane extends GraphicsPane {
     }
 
     private void addBackground() {
-        background = new GImage("Train.jpeg", 0, 0);
+        background = new GImage("monsterselectscreen.jpeg", 0, 0);
         background.setSize(mainScreen.getWidth()-15, mainScreen.getHeight()-30);
         mainScreen.add(background);
         contents.add(background);
