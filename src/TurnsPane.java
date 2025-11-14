@@ -45,7 +45,9 @@ public class TurnsPane extends GraphicsPane{
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		mainScreen.switchToTrainingScreen();
+		//mainScreen.switchToTrainingScreen();
+		mainScreen.switchToTrainingScreen(mainScreen.getMonster());
+
 	}
 	
 }

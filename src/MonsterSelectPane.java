@@ -55,17 +55,59 @@ public class MonsterSelectPane extends GraphicsPane {
         GObject clicked = mainScreen.getElementAtLocation(e.getX(), e.getY());
         if (clicked == null) return;
 
+        Monster selectedMonster = null;
+
         if (clicked == monster1) {
             System.out.println("Monster 1 selected!");
-            mainScreen.switchToTurnsScreen();
+            selectedMonster = createMonster(MonsterType.BILLABONG);
         } 
         else if (clicked == monster2) {
             System.out.println("Monster 2 selected!");
-            mainScreen.switchToTurnsScreen();
+            selectedMonster = createMonster(MonsterType.SOCKGUY);
         } 
         else if (clicked == monster3) {
             System.out.println("Monster 3 selected!");
-            mainScreen.switchToTurnsScreen();
+            selectedMonster = createMonster(MonsterType.CLAYGUY);
+        }
+
+        if (selectedMonster != null) {
+            mainScreen.switchToTrainingScreen(selectedMonster);
         }
     }
+    private Monster createMonster(MonsterType type) {
+        switch (type) {
+            case BILLABONG:
+                return new Monster(
+                    0,   // fatigue
+                    5,   // strength
+                    4,   // speed
+                    6,   // defense
+                    20,  // health
+                    type
+                );
+
+            case SOCKGUY:
+                return new Monster(
+                    0,
+                    3,
+                    7,
+                    3,
+                    18,
+                    type
+                );
+
+            case CLAYGUY:
+                return new Monster(
+                    0,
+                    6,
+                    3,
+                    5,
+                    22,
+                    type
+                );
+        }
+        return null;
+    }
+
+
 }
