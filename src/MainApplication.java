@@ -122,9 +122,7 @@ public class MainApplication extends GraphicsProgram {
     }
 
 
-    // =============================================================
-    // GENERAL SCREEN SWITCHER
-    // =============================================================
+   
     protected void switchToScreen(GraphicsPane newScreen) {
         if (currentScreen != null) {
             currentScreen.hideContent();
@@ -134,9 +132,6 @@ public class MainApplication extends GraphicsProgram {
     }
 
 
-    // =============================================================
-    // INPUT PASSTHROUGH
-    // =============================================================
     public GObject getElementAtLocation(double x, double y) {
         return getElementAt(x, y);
     }
@@ -182,10 +177,6 @@ public class MainApplication extends GraphicsProgram {
     }
 
 
-    // =============================================================
-    // GETTERS / SETTERS
-    // =============================================================
-
     public void setDifficulty(Difficulty d) {
         this.difficulty = d;
     }
@@ -205,11 +196,13 @@ public class MainApplication extends GraphicsProgram {
     public void setMonster(Monster monster) {
         this.monster = monster;
     }
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
 
 
-    // =============================================================
-    // MAIN ENTRY POINT
-    // =============================================================
+
+    
     public static void main(String[] args) {
         new MainApplication().start();
     }
