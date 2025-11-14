@@ -210,6 +210,7 @@ public class TrainingPane extends GraphicsPane {
             case DEFENSE: button = TrainingButton.BACK; break;
             case BACK: button = TrainingButton.STRENGTH; break;
         }
+        selectButton.setSize(selectButtonSize);
         selectButton.setImage(button.toString());
     }
 
@@ -224,6 +225,7 @@ public class TrainingPane extends GraphicsPane {
             case DEFENSE: button = TrainingButton.AGILITY; break;
             case AGILITY: button = TrainingButton.STRENGTH; break;
         }
+        selectButton.setSize(selectButtonSize);
         selectButton.setImage(button.toString());
     }
 
