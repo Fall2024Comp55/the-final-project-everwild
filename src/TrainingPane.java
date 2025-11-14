@@ -21,6 +21,7 @@ public class TrainingPane extends GraphicsPane {
     private GLabel speedLabel;
     private GLabel defenseLabel;
     private GLabel fatigueLabel;
+    private GLabel difficultyLabel;
 
     private GDimension selectButtonSize = new GDimension(120, 50);
     private TrainingButton button;
@@ -38,6 +39,7 @@ public class TrainingPane extends GraphicsPane {
         addBackground();
         addButtons();
         addStatWindow();   // loads stats from monster
+        addDifficultyLabel();
     }
 
     @Override
@@ -47,6 +49,16 @@ public class TrainingPane extends GraphicsPane {
         }
         contents.clear();
     }
+    private void addDifficultyLabel() {
+        String text = "Difficulty: " + mainScreen.getDifficulty().toString();
+        difficultyLabel = new GLabel(text, 330, 450);
+        difficultyLabel.setFont("Arial-18");
+        difficultyLabel.setColor(Color.WHITE);
+
+        contents.add(difficultyLabel);
+        mainScreen.add(difficultyLabel);
+    }
+
 
     private void addButtons() {
         leftButton = new GImage("leftarrow.jpeg");
@@ -134,22 +146,83 @@ public class TrainingPane extends GraphicsPane {
     }
 
     private void trainStrength() {
-        monster.setStrength(monster.getStrength() + 1);
-        monster.setFatigue(monster.getFatigue() + 1);
+        Difficulty diff = mainScreen.getDifficulty();
+
+        switch (diff) {
+
+            case BABY:
+                monster.setStrength(monster.getStrength() + 2);
+                monster.setFatigue(monster.getFatigue() + 1);
+                break;
+
+            case CHILD:
+                monster.setStrength(monster.getStrength() + 1);
+                monster.setFatigue(monster.getFatigue() + 1);
+                break;
+
+            case NORMAL:
+                if (Math.random() < 0.5) {        // 50% chance
+                    monster.setStrength(monster.getStrength() + 1);
+                }
+                monster.setFatigue(monster.getFatigue() + 2);
+                break;
+        }
+
         updateStatDisplay();
     }
 
     private void trainAgility() {
-        monster.setSpeed(monster.getSpeed() + 1);
-        monster.setFatigue(monster.getFatigue() + 1);
+        Difficulty diff = mainScreen.getDifficulty();
+
+        switch (diff) {
+
+            case BABY:
+                monster.setSpeed(monster.getSpeed() + 2);
+                monster.setFatigue(monster.getFatigue() + 1);
+                break;
+
+            case CHILD:
+                monster.setSpeed(monster.getSpeed() + 1);
+                monster.setFatigue(monster.getFatigue() + 1);
+                break;
+
+            case NORMAL:
+                if (Math.random() < 0.5) {
+                    monster.setSpeed(monster.getSpeed() + 1);
+                }
+                monster.setFatigue(monster.getFatigue() + 2);
+                break;
+        }
+
         updateStatDisplay();
     }
 
     private void trainDefense() {
-        monster.setDefense(monster.getDefense() + 1);
-        monster.setFatigue(monster.getFatigue() + 1);
+        Difficulty diff = mainScreen.getDifficulty();
+
+        switch (diff) {
+
+            case BABY:
+                monster.setDefense(monster.getDefense() + 2);
+                monster.setFatigue(monster.getFatigue() + 1);
+                break;
+
+            case CHILD:
+                monster.setDefense(monster.getDefense() + 1);
+                monster.setFatigue(monster.getFatigue() + 1);
+                break;
+
+            case NORMAL:
+                if (Math.random() < 0.5) {
+                    monster.setDefense(monster.getDefense() + 1);
+                }
+                monster.setFatigue(monster.getFatigue() + 2);
+                break;
+        }
+
         updateStatDisplay();
     }
+
 
 
     @Override
