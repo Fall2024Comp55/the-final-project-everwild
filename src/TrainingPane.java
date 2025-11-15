@@ -161,6 +161,11 @@ public class TrainingPane extends GraphicsPane {
         background.setImage("Train.jpeg");
         background.setSize(mainScreen.getWidth() - 15, mainScreen.getHeight() - 30);
     }
+    private void switchBackgroundToBattle() {
+        background.setImage("BattleBackground.jpeg");
+        background.setSize(mainScreen.getWidth() - 15, mainScreen.getHeight() - 30);
+    }
+
 
 
     // =============================================================
@@ -181,7 +186,7 @@ public class TrainingPane extends GraphicsPane {
                 break;
 
             case NORMAL:
-                if (Math.random() < 0.5) {
+                if (Math.random() < 0.75) {
                     monster.setStrength(monster.getStrength() + 1);
                 }
                 monster.setFatigue(monster.getFatigue() + 2);
@@ -206,7 +211,7 @@ public class TrainingPane extends GraphicsPane {
                 break;
 
             case NORMAL:
-                if (Math.random() < 0.5) {
+                if (Math.random() < 0.75) {
                     monster.setSpeed(monster.getSpeed() + 1);
                 }
                 monster.setFatigue(monster.getFatigue() + 2);
@@ -231,7 +236,7 @@ public class TrainingPane extends GraphicsPane {
                 break;
 
             case NORMAL:
-                if (Math.random() < 0.5) {
+                if (Math.random() < 0.75) {
                     monster.setDefense(monster.getDefense() + 1);
                 }
                 monster.setFatigue(monster.getFatigue() + 2);
@@ -284,9 +289,10 @@ public class TrainingPane extends GraphicsPane {
                     break;
 
                 case BATTLE:
-                    BattleDifficultySelect();
-                   
+                    switchBackgroundToBattle();     // ★ NEW
+                    BattleDifficultySelect();       // (you will implement later)
                     break;
+
 
                 case BACK:
                     button = TrainingButton.TRAIN;
