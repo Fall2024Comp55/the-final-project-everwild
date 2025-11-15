@@ -40,6 +40,7 @@ public class TrainingPane extends GraphicsPane {
         addButtons();
         addStatWindow();   // loads stats from monster
         addDifficultyLabel();
+        addBorders();
     }
 
     @Override
@@ -129,12 +130,20 @@ public class TrainingPane extends GraphicsPane {
 
         updateStatDisplay();
     }
+    
+    private void addBorders() {
+    	
+    }
     private void updateStatDisplay() {
         strengthLabel.setLabel("Strength: " + monster.getStrength());
         speedLabel.setLabel("Agility: " + monster.getSpeed());
         defenseLabel.setLabel("Defense: " + monster.getDefense());
         fatigueLabel.setLabel("Fatigue: " + monster.getFatigue());
     }
+    private void endTurn() {
+        mainScreen.setTurnsRemaining(mainScreen.getTurnsRemaining()-1);
+        mainScreen.switchToTurnsScreen();
+	}
 
 
     private void RestMonster() {
@@ -143,6 +152,7 @@ public class TrainingPane extends GraphicsPane {
         if (f < 0) f = 0;
         monster.setFatigue(f);
         updateStatDisplay();
+        endTurn();
     }
 
     private void trainStrength() {
@@ -161,7 +171,7 @@ public class TrainingPane extends GraphicsPane {
                 break;
 
             case NORMAL:
-                if (Math.random() < 0.5) {        // 50% chance
+                if (Math.random() < 0.75) {        // 50% chance
                     monster.setStrength(monster.getStrength() + 1);
                 }
                 monster.setFatigue(monster.getFatigue() + 2);
@@ -169,6 +179,7 @@ public class TrainingPane extends GraphicsPane {
         }
 
         updateStatDisplay();
+        endTurn();
     }
 
     private void trainAgility() {
@@ -187,7 +198,7 @@ public class TrainingPane extends GraphicsPane {
                 break;
 
             case NORMAL:
-                if (Math.random() < 0.5) {
+                if (Math.random() < 0.75) {
                     monster.setSpeed(monster.getSpeed() + 1);
                 }
                 monster.setFatigue(monster.getFatigue() + 2);
@@ -195,6 +206,7 @@ public class TrainingPane extends GraphicsPane {
         }
 
         updateStatDisplay();
+        endTurn();
     }
 
     private void trainDefense() {
@@ -213,7 +225,7 @@ public class TrainingPane extends GraphicsPane {
                 break;
 
             case NORMAL:
-                if (Math.random() < 0.5) {
+                if (Math.random() < 0.75) {
                     monster.setDefense(monster.getDefense() + 1);
                 }
                 monster.setFatigue(monster.getFatigue() + 2);
@@ -221,6 +233,7 @@ public class TrainingPane extends GraphicsPane {
         }
 
         updateStatDisplay();
+        endTurn();
     }
 
 
@@ -283,8 +296,8 @@ public class TrainingPane extends GraphicsPane {
             case DEFENSE: button = TrainingButton.BACK; break;
             case BACK: button = TrainingButton.STRENGTH; break;
         }
-        selectButton.setSize(selectButtonSize);
         selectButton.setImage(button.toString());
+        selectButton.setSize(selectButtonSize);
     }
 
     private void changeButtonOptionLeft() {
@@ -298,8 +311,8 @@ public class TrainingPane extends GraphicsPane {
             case DEFENSE: button = TrainingButton.AGILITY; break;
             case AGILITY: button = TrainingButton.STRENGTH; break;
         }
-        selectButton.setSize(selectButtonSize);
         selectButton.setImage(button.toString());
+        selectButton.setSize(selectButtonSize);
     }
 
     private void BattleDifficultySelect() {
