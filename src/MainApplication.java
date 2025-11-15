@@ -27,7 +27,7 @@ public class MainApplication extends GraphicsProgram {
     private TrainingPane trainingPane;
 
     private BattlePane battlePane;
-    private RestPane restPane;
+
 
     // The active screen currently shown
     private GraphicsPane currentScreen;
@@ -60,7 +60,7 @@ public class MainApplication extends GraphicsProgram {
         turnsPane = new TurnsPane(this);
 
         battlePane = new BattlePane(this);
-        restPane = new RestPane(this);
+       
 
         //// >>> DO NOT CREATE TRAININGPANE HERE
 
@@ -105,9 +105,7 @@ public class MainApplication extends GraphicsProgram {
         switchToScreen(welcomePane);
     }
 
-    public void switchToRestScreen() {
-        switchToScreen(restPane);
-    }
+
 
     public void switchToDifficultyScreen() {
         switchToScreen(difficultyPane);
@@ -122,7 +120,9 @@ public class MainApplication extends GraphicsProgram {
     }
 
 
-   
+    // =============================================================
+    // GENERAL SCREEN SWITCHER
+    // =============================================================
     protected void switchToScreen(GraphicsPane newScreen) {
         if (currentScreen != null) {
             currentScreen.hideContent();
@@ -132,6 +132,9 @@ public class MainApplication extends GraphicsProgram {
     }
 
 
+    // =============================================================
+    // INPUT PASSTHROUGH
+    // =============================================================
     public GObject getElementAtLocation(double x, double y) {
         return getElementAt(x, y);
     }
