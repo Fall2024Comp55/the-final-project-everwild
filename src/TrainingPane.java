@@ -96,14 +96,11 @@ public class TrainingPane extends GraphicsPane {
     }
 
 
-    // =============================================================
-    //  STAT WINDOW
-    // =============================================================
     private void addStatWindow() {
-        GRect statBox = new GRect(200, 280);
+        GRect statBox = new GRect(260, 300);
         statBox.setFilled(true);
         statBox.setFillColor(Color.LIGHT_GRAY);
-        statBox.setLocation(770, 260);
+        statBox.setLocation(740, 240);
 
         contents.add(statBox);
         mainScreen.add(statBox);
