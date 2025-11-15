@@ -16,6 +16,7 @@ public class TrainingPane extends GraphicsPane {
     private GImage selectButton;
     private GImage background;
     private GImage statWindow;
+    private GImage border;
 
     private GLabel strengthLabel;
     private GLabel speedLabel;
@@ -37,10 +38,12 @@ public class TrainingPane extends GraphicsPane {
     @Override
     public void showContent() {
         addBackground();
-        addButtons();
         addStatWindow();   // loads stats from monster
-        addDifficultyLabel();
+        
+        
         addBorders();
+        addDifficultyLabel();
+        addButtons();
     }
 
     @Override
@@ -62,10 +65,10 @@ public class TrainingPane extends GraphicsPane {
 
 
     private void addButtons() {
-        leftButton = new GImage("leftarrow.jpeg");
+        leftButton = new GImage("leftarrow.png");
         leftButton.setSize(50, 50);
 
-        rightButton = new GImage("rightarrow.jpeg");
+        rightButton = new GImage("rightarrow.png");
         rightButton.setSize(50, 50);
 
         selectButton = new GImage(button.toString());
@@ -132,7 +135,10 @@ public class TrainingPane extends GraphicsPane {
     }
     
     private void addBorders() {
-    	
+    	border = new GImage("trainingWindowBorder.png");
+    	border.setSize(mainScreen.getWidth() - 15, mainScreen.getHeight() - 30);
+    	mainScreen.add(border);
+    	contents.add(border);
     }
     private void updateStatDisplay() {
         strengthLabel.setLabel("Strength: " + monster.getStrength());
