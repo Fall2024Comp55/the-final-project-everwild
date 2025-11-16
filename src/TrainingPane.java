@@ -76,14 +76,14 @@ public class TrainingPane extends GraphicsPane {
     // BUTTONS
     // =============================================================
     private void addButtons() {
-        leftButton = new GImage("leftarrow.jpeg");
+        leftButton = new GImage("leftarrow.png");
         leftButton.setSize(50, 50);
 
-        rightButton = new GImage("rightarrow.jpeg");
+        rightButton = new GImage("rightarrow.png");
         rightButton.setSize(50, 50);
 
         selectButton = new GImage(button.toString());
-        selectButton.setSize(selectButtonSize);
+        selectButton.setSize(selectButtonSize.getWidth(), selectButtonSize.getHeight());
         selectButton.setLocation(330, 370);
 
         leftButton.setLocation(selectButton.getX() - leftButton.getWidth() - 10, selectButton.getY());
@@ -400,7 +400,8 @@ public class TrainingPane extends GraphicsPane {
                     break;
             }
 
-            selectButton.setSize(selectButtonSize);
+            selectButton.setSize(selectButtonSize.getWidth(), selectButtonSize.getHeight());
+
         }
     }
 
@@ -422,6 +423,7 @@ public class TrainingPane extends GraphicsPane {
         }
 
         selectButton.setImage(button.toString());
+        selectButton.setSize(selectButtonSize.getWidth(), selectButtonSize.getHeight());
 
         // backgrounds
         if (button == TrainingButton.REST) switchBackgroundToRest();
@@ -450,6 +452,7 @@ public class TrainingPane extends GraphicsPane {
         }
 
         selectButton.setImage(button.toString());
+        selectButton.setSize(selectButtonSize.getWidth(), selectButtonSize.getHeight());
 
         if (button == TrainingButton.REST) switchBackgroundToRest();
         else if (button == TrainingButton.BATTLE) switchBackgroundToBattle();
