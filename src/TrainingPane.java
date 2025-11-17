@@ -101,6 +101,7 @@ public class TrainingPane extends GraphicsPane {
         rightButton.setSize(50, 50);
 
         selectButton = new GImage(button.toString());
+       
         selectButton.setSize(selectButtonSize.getWidth(), selectButtonSize.getHeight());
         selectButton.setLocation(330, 370);
 
@@ -340,7 +341,7 @@ public class TrainingPane extends GraphicsPane {
                     clearPreviews();
                     break;
             }
-
+selectButton.setImage(button.toString());
             selectButton.setSize(selectButtonSize.getWidth(), selectButtonSize.getHeight());
         }
     }
@@ -361,7 +362,7 @@ public class TrainingPane extends GraphicsPane {
         }
 
         selectButton.setImage(button.toString());
-
+        selectButton.setSize(selectButtonSize.getWidth(), selectButtonSize.getHeight());
         if (button == TrainingButton.REST) switchBackgroundToRest();
         else if (button == TrainingButton.BATTLE) switchBackgroundToBattle();
         else switchBackgroundToTrain();
@@ -385,7 +386,7 @@ public class TrainingPane extends GraphicsPane {
         }
 
         selectButton.setImage(button.toString());
-
+        selectButton.setSize(selectButtonSize.getWidth(), selectButtonSize.getHeight());
         if (button == TrainingButton.REST) switchBackgroundToRest();
         else if (button == TrainingButton.BATTLE) switchBackgroundToBattle();
         else switchBackgroundToTrain();
