@@ -23,6 +23,7 @@ public class TrainingPane extends GraphicsPane {
     private GLabel fatigueLabel;
     private GLabel difficultyLabel;
 
+    // Preview labels (only used for selected stat)
     private GLabel strengthPreview;
     private GLabel speedPreview;
     private GLabel defensePreview;
@@ -31,11 +32,13 @@ public class TrainingPane extends GraphicsPane {
     private GDimension selectButtonSize = new GDimension(120, 50);
     private TrainingButton button;
 
+
     public TrainingPane(MainApplication mainScreen, Monster monster) {
         this.mainScreen = mainScreen;
         this.monster = monster;
         this.button = TrainingButton.TRAIN;
     }
+
 
     @Override
     public void showContent() {
@@ -43,7 +46,7 @@ public class TrainingPane extends GraphicsPane {
         addButtons();
         addStatWindow();
         addDifficultyLabel();
-        clearPreviews();
+        clearPreviews();        // ← no preview at start
     }
 
     @Override
@@ -54,41 +57,20 @@ public class TrainingPane extends GraphicsPane {
         contents.clear();
     }
 
-    // =============================================================
-    // BACKGROUND (ORIGINAL SIZE)
-    // =============================================================
-    private void addBackground() {
-        background = new GImage("Train.jpeg");
-        background.setSize(mainScreen.getWidth() - 15, mainScreen.getHeight() - 30);
-        contents.add(background);
-        mainScreen.add(background);
-    }
-
-    private void switchBackgroundToTrain() {
-        background.setImage("Train.jpeg");
-        background.setSize(mainScreen.getWidth() - 15, mainScreen.getHeight() - 30);
-    }
-
-    private void switchBackgroundToRest() {
-        background.setImage("RestBackground.jpeg");
-        background.setSize(mainScreen.getWidth() - 15, mainScreen.getHeight() - 30);
-    }
-
-    private void switchBackgroundToBattle() {
-        background.setImage("BattleBackground.jpeg");
-        background.setSize(mainScreen.getWidth() - 15, mainScreen.getHeight() - 30);
-    }
 
     // =============================================================
     // DIFFICULTY LABEL
     // =============================================================
     private void addDifficultyLabel() {
-        difficultyLabel = new GLabel("Difficulty: " + mainScreen.getDifficulty(), 330, 450);
+        String text = "Difficulty: " + mainScreen.getDifficulty().toString();
+        difficultyLabel = new GLabel(text, 330, 450);
         difficultyLabel.setFont("Arial-18");
         difficultyLabel.setColor(Color.WHITE);
+
         contents.add(difficultyLabel);
         mainScreen.add(difficultyLabel);
     }
+
 
     // =============================================================
     // BUTTONS
@@ -101,7 +83,6 @@ public class TrainingPane extends GraphicsPane {
         rightButton.setSize(50, 50);
 
         selectButton = new GImage(button.toString());
-       
         selectButton.setSize(selectButtonSize.getWidth(), selectButtonSize.getHeight());
         selectButton.setLocation(330, 370);
 
@@ -117,20 +98,52 @@ public class TrainingPane extends GraphicsPane {
         mainScreen.add(selectButton);
     }
 
+
+    // =============================================================
+    // BACKGROUND
+    // =============================================================
+    private void addBackground() {
+        background = new GImage("Train.jpeg");
+        background.setSize(mainScreen.getWidth() - 15, mainScreen.getHeight() - 30);
+
+        contents.add(background);
+        mainScreen.add(background);
+    }
+
+    private void switchBackgroundToRest() {
+        background.setImage("RestBackground.jpeg");
+        background.setSize(mainScreen.getWidth() - 15, mainScreen.getHeight() - 30);
+    }
+
+    private void switchBackgroundToTrain() {
+        background.setImage("Train.jpeg");
+        background.setSize(mainScreen.getWidth() - 15, mainScreen.getHeight() - 30);
+    }
+
+    private void switchBackgroundToBattle() {
+        background.setImage("BattleBackground.jpeg");
+        background.setSize(mainScreen.getWidth() - 15, mainScreen.getHeight() - 30);
+    }
+
+
     // =============================================================
     // STAT WINDOW + PREVIEW LABELS
     // =============================================================
     private void addStatWindow() {
 
-        GRect statBox = new GRect(150, 300);
+        GRect statBox = new GRect(200, 300);
         statBox.setFilled(true);
         statBox.setFillColor(new Color(91, 87, 75));
         statBox.setLocation(777, 240);
         statBox.setLineWidth(0);
+        statBox.setColor(new Color(0,0,0,0));
+
+
 
         contents.add(statBox);
         mainScreen.add(statBox);
 
+        // Real stat labels
         strengthLabel = new GLabel("", 790, 300);
         speedLabel = new GLabel("", 790, 340);
         defenseLabel = new GLabel("", 790, 380);
@@ -146,6 +159,7 @@ public class TrainingPane extends GraphicsPane {
         mainScreen.add(defenseLabel);
         mainScreen.add(fatigueLabel);
 
+        // PREVIEW LABELS — start empty
         Color previewColor = new Color(120, 120, 120);
 
         strengthPreview = new GLabel("", 950, 300);
@@ -171,6 +185,7 @@ public class TrainingPane extends GraphicsPane {
         updateStatDisplay();
     }
 
+
     private void updateStatDisplay() {
         strengthLabel.setLabel("Strength: " + monster.getStrength());
         speedLabel.setLabel("Agility: " + monster.getSpeed());
@@ -178,8 +193,9 @@ public class TrainingPane extends GraphicsPane {
         fatigueLabel.setLabel("Fatigue: " + monster.getFatigue());
     }
 
+
     // =============================================================
-    // PREVIEW LOGIC
+    // PREVIEW HELPERS
     // =============================================================
     private void clearPreviews() {
         strengthPreview.setLabel("");
@@ -188,36 +204,48 @@ public class TrainingPane extends GraphicsPane {
         fatiguePreview.setLabel("");
     }
 
-    private int getStatGain() {
-        Difficulty d = mainScreen.getDifficulty();
-        return (d == Difficulty.BABY) ? 2 : 1;
-    }
-
-    private int getFatigueGain() {
-        Difficulty d = mainScreen.getDifficulty();
-        return (d == Difficulty.NORMAL) ? 2 : 1;
-    }
-
     private void showStrengthPreview() {
         clearPreviews();
-        strengthPreview.setLabel("+" + getStatGain());
-        fatiguePreview.setLabel("+" + getFatigueGain());
+
+        Difficulty d = mainScreen.getDifficulty();
+        int gain = (d == Difficulty.BABY) ? 2 :
+                   (d == Difficulty.CHILD) ? 1 : 1;
+
+        strengthPreview.setLabel("+" + gain);
+        // fatigue also increases
+        int fatGain = (d == Difficulty.NORMAL) ? 2 : 1;
+        fatiguePreview.setLabel("+" + fatGain);
     }
 
     private void showAgilityPreview() {
         clearPreviews();
-        speedPreview.setLabel("+" + getStatGain());
-        fatiguePreview.setLabel("+" + getFatigueGain());
+
+        Difficulty d = mainScreen.getDifficulty();
+        int gain = (d == Difficulty.BABY) ? 2 :
+                   (d == Difficulty.CHILD) ? 1 : 1;
+
+        speedPreview.setLabel("+" + gain);
+
+        int fatGain = (d == Difficulty.NORMAL) ? 2 : 1;
+        fatiguePreview.setLabel("+" + fatGain);
     }
 
     private void showDefensePreview() {
         clearPreviews();
-        defensePreview.setLabel("+" + getStatGain());
-        fatiguePreview.setLabel("+" + getFatigueGain());
+
+        Difficulty d = mainScreen.getDifficulty();
+        int gain = (d == Difficulty.BABY) ? 2 :
+                   (d == Difficulty.CHILD) ? 1 : 1;
+
+        defensePreview.setLabel("+" + gain);
+
+        int fatGain = (d == Difficulty.NORMAL) ? 2 : 1;
+        fatiguePreview.setLabel("+" + fatGain);
     }
 
+
     // =============================================================
-    // STAT ANIMATION
+    // ANIMATION
     // =============================================================
     private void animateStatIncrease(GLabel label, int oldVal, int newVal) {
         int step = (newVal > oldVal) ? 1 : -1;
@@ -229,63 +257,98 @@ public class TrainingPane extends GraphicsPane {
         }
     }
 
+
     // =============================================================
-    // TRAINING METHODS
+    // TRAINING METHODS WITH ANIMATION
     // =============================================================
     private void trainStrength() {
-        int old = monster.getStrength();
-        int fatOld = monster.getFatigue();
 
-        monster.setStrength(old + getStatGain());
-        monster.setFatigue(fatOld + getFatigueGain());
+        int oldS = monster.getStrength();
+        int oldF = monster.getFatigue();
 
-        animateStatIncrease(strengthLabel, old, monster.getStrength());
-        animateStatIncrease(fatigueLabel, fatOld, monster.getFatigue());
+        Difficulty d = mainScreen.getDifficulty();
 
+        if (d == Difficulty.BABY) {
+            monster.setStrength(oldS + 2);
+            monster.setFatigue(oldF + 1);
+        } else if (d == Difficulty.CHILD) {
+            monster.setStrength(oldS + 1);
+            monster.setFatigue(oldF + 1);
+        } else {
+            if (Math.random() < 0.75) monster.setStrength(oldS + 1);
+            monster.setFatigue(oldF + 2);
+        }
+
+        animateStatIncrease(strengthLabel, oldS, monster.getStrength());
+        animateStatIncrease(fatigueLabel, oldF, monster.getFatigue());
         clearPreviews();
     }
 
     private void trainAgility() {
-        int old = monster.getSpeed();
-        int fatOld = monster.getFatigue();
 
-        monster.setSpeed(old + getStatGain());
-        monster.setFatigue(fatOld + getFatigueGain());
+        int oldA = monster.getSpeed();
+        int oldF = monster.getFatigue();
 
-        animateStatIncrease(speedLabel, old, monster.getSpeed());
-        animateStatIncrease(fatigueLabel, fatOld, monster.getFatigue());
+        Difficulty d = mainScreen.getDifficulty();
 
+        if (d == Difficulty.BABY) {
+            monster.setSpeed(oldA + 2);
+            monster.setFatigue(oldF + 1);
+        } else if (d == Difficulty.CHILD) {
+            monster.setSpeed(oldA + 1);
+            monster.setFatigue(oldF + 1);
+        } else {
+            if (Math.random() < 0.75) monster.setSpeed(oldA + 1);
+            monster.setFatigue(oldF + 2);
+        }
+
+        animateStatIncrease(speedLabel, oldA, monster.getSpeed());
+        animateStatIncrease(fatigueLabel, oldF, monster.getFatigue());
         clearPreviews();
     }
 
     private void trainDefense() {
-        int old = monster.getDefense();
-        int fatOld = monster.getFatigue();
 
-        monster.setDefense(old + getStatGain());
-        monster.setFatigue(fatOld + getFatigueGain());
+        int oldD = monster.getDefense();
+        int oldF = monster.getFatigue();
 
-        animateStatIncrease(defenseLabel, old, monster.getDefense());
-        animateStatIncrease(fatigueLabel, fatOld, monster.getFatigue());
+        Difficulty d = mainScreen.getDifficulty();
 
+        if (d == Difficulty.BABY) {
+            monster.setDefense(oldD + 2);
+            monster.setFatigue(oldF + 1);
+        } else if (d == Difficulty.CHILD) {
+            monster.setDefense(oldD + 1);
+            monster.setFatigue(oldF + 1);
+        } else {
+            if (Math.random() < 0.75) monster.setDefense(oldD + 1);
+            monster.setFatigue(oldF + 2);
+        }
+
+        animateStatIncrease(defenseLabel, oldD, monster.getDefense());
+        animateStatIncrease(fatigueLabel, oldF, monster.getFatigue());
         clearPreviews();
     }
+
 
     // =============================================================
     // REST
     // =============================================================
     private void RestMonster() {
-        int old = monster.getFatigue();
-        int newFat = Math.max(0, old - 2);
 
-        monster.setFatigue(newFat);
-        animateStatIncrease(fatigueLabel, old, newFat);
+        int oldF = monster.getFatigue();
+        int newF = oldF - 2;
+        if (newF < 0) newF = 0;
+
+        monster.setFatigue(newF);
+        animateStatIncrease(fatigueLabel, oldF, newF);
 
         clearPreviews();
     }
 
+
     // =============================================================
-    // MAIN BUTTON CLICK
+    // MOUSE CLICK HANDLING
     // =============================================================
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -334,59 +397,67 @@ public class TrainingPane extends GraphicsPane {
                     break;
 
                 case BACK:
-                default:
                     button = TrainingButton.TRAIN;
                     selectButton.setImage(button.toString());
                     switchBackgroundToTrain();
                     clearPreviews();
                     break;
             }
-selectButton.setImage(button.toString());
+
             selectButton.setSize(selectButtonSize.getWidth(), selectButtonSize.getHeight());
+
         }
     }
 
+
     // =============================================================
-    // BUTTON CYCLING (NEW ORDER)
+    // CYCLING BUTTONS (LEFT/RIGHT)
     // =============================================================
     private void changeButtonOptionRight() {
 
         switch (button) {
-            case TRAIN: button = TrainingButton.STRENGTH; break;
-            case STRENGTH: button = TrainingButton.AGILITY; break;
-            case AGILITY: button = TrainingButton.DEFENSE; break;
-            case DEFENSE: button = TrainingButton.REST; break;
+            case TRAIN: button = TrainingButton.REST; break;
             case REST: button = TrainingButton.BATTLE; break;
             case BATTLE: button = TrainingButton.TRAIN; break;
-            case BACK: button = TrainingButton.TRAIN; break;
+
+            case STRENGTH: button = TrainingButton.AGILITY; break;
+            case AGILITY: button = TrainingButton.DEFENSE; break;
+            case DEFENSE: button = TrainingButton.BACK; break;
+            case BACK: button = TrainingButton.STRENGTH; break;
         }
 
         selectButton.setImage(button.toString());
         selectButton.setSize(selectButtonSize.getWidth(), selectButtonSize.getHeight());
+
+        // backgrounds
         if (button == TrainingButton.REST) switchBackgroundToRest();
         else if (button == TrainingButton.BATTLE) switchBackgroundToBattle();
         else switchBackgroundToTrain();
 
+        // previews
         if (button == TrainingButton.STRENGTH) showStrengthPreview();
         else if (button == TrainingButton.AGILITY) showAgilityPreview();
         else if (button == TrainingButton.DEFENSE) showDefensePreview();
         else clearPreviews();
     }
+
 
     private void changeButtonOptionLeft() {
 
         switch (button) {
             case TRAIN: button = TrainingButton.BATTLE; break;
             case BATTLE: button = TrainingButton.REST; break;
-            case REST: button = TrainingButton.DEFENSE; break;
+            case REST: button = TrainingButton.TRAIN; break;
+
+            case STRENGTH: button = TrainingButton.BACK; break;
+            case BACK: button = TrainingButton.DEFENSE; break;
             case DEFENSE: button = TrainingButton.AGILITY; break;
             case AGILITY: button = TrainingButton.STRENGTH; break;
-            case STRENGTH: button = TrainingButton.TRAIN; break;
-            case BACK: button = TrainingButton.TRAIN; break;
         }
 
         selectButton.setImage(button.toString());
         selectButton.setSize(selectButtonSize.getWidth(), selectButtonSize.getHeight());
+
         if (button == TrainingButton.REST) switchBackgroundToRest();
         else if (button == TrainingButton.BATTLE) switchBackgroundToBattle();
         else switchBackgroundToTrain();
@@ -397,7 +468,9 @@ selectButton.setImage(button.toString());
         else clearPreviews();
     }
 
+
     private void BattleDifficultySelect() {
-        // Future
+        // TODO for future
     }
+
 }
