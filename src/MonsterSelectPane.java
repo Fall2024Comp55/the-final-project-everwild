@@ -71,8 +71,10 @@ public class MonsterSelectPane extends GraphicsPane {
         }
 
         if (selectedMonster != null) {
-            mainScreen.switchToTrainingScreen(selectedMonster);
+            mainScreen.setMonster(selectedMonster);  
+            mainScreen.switchToTurnsScreen();       
         }
+
     }
     private Monster createMonster(MonsterType type) {
         switch (type) {

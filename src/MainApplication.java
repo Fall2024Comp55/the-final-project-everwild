@@ -105,7 +105,9 @@ public class MainApplication extends GraphicsProgram {
         switchToScreen(welcomePane);
     }
 
-
+    public void switchToTurnsPane() {
+        switchToScreen(turnsPane);
+    }
 
     public void switchToDifficultyScreen() {
         switchToScreen(difficultyPane);
