@@ -423,13 +423,13 @@ public class TrainingPane extends GraphicsPane {
 
         switch (button) {
             case TRAIN:
-                updateDescription("Training menu: press Select to start training your monster.");
+                updateDescription("Training menu: Click Train button to start training your monster.");
                 break;
             case REST:
-                updateDescription("Rest: press Select to lower your monster's fatigue.");
+                updateDescription("Rest: to lower your monster's fatigue.");
                 break;
             case BATTLE:
-                updateDescription("Battle: press Select to move toward a battle using your current stats.");
+                updateDescription("Battle: Click combat button to move toward a battle using your current stats.");
                 break;
             case STRENGTH:
                 updateDescription("Strength training: increases Strength, but adds Fatigue.");
