@@ -28,7 +28,14 @@ public class TrainingPane extends GraphicsPane {
     private GLabel speedPreview;
     private GLabel defensePreview;
     private GLabel fatiguePreview;
+    
+    // Description box (bottom-left)
+    private GRect descriptionBox;
+    private GLabel descriptionLabel;
 
+    // Monster preview (top-right)
+    private GRect monsterPreviewBox;
+    private GLabel monsterPreviewLabel;
     private GDimension selectButtonSize = new GDimension(120, 50);
     private TrainingButton button;
 
@@ -45,8 +52,11 @@ public class TrainingPane extends GraphicsPane {
         addBackground();  
         addButtons();
         addStatWindow();
+        addMonsterPreview();     // top-right temp monster
         addDifficultyLabel();
-        clearPreviews();        // ← no preview at start
+        addDescriptionBox();     // bottom-left description area
+        clearPreviews();         // no preview at start
+        updateModeDescription(); // describe current mode (TRAIN by default)
     }
 
     @Override
@@ -71,7 +81,31 @@ public class TrainingPane extends GraphicsPane {
         mainScreen.add(difficultyLabel);
     }
 
+    private void addDescriptionBox() {
+        // Long gray rectangle in bottom-left of TrainingPane
+        descriptionBox = new GRect(600, 80);
+        descriptionBox.setFilled(true);
+        descriptionBox.setFillColor(new Color(91, 87, 75));
+        descriptionBox.setLocation(40, 470);
+        descriptionBox.setLineWidth(0);
+        descriptionBox.setColor(new Color(0, 0, 0, 0));
 
+        descriptionLabel = new GLabel("", descriptionBox.getX() + 10, descriptionBox.getY() + 25);
+        descriptionLabel.setFont("Arial-16");
+        descriptionLabel.setColor(Color.WHITE);
+
+        contents.add(descriptionBox);
+        contents.add(descriptionLabel);
+        mainScreen.add(descriptionBox);
+        mainScreen.add(descriptionLabel);
+
+        updateDescription("Training menu: use the arrows to select TRAIN, REST, or BATTLE.");
+    }
+    private void updateDescription(String text) {
+        if (descriptionLabel != null) {
+            descriptionLabel.setLabel(text);
+        }
+    }
     // =============================================================
     // BUTTONS
     // =============================================================
@@ -191,8 +225,42 @@ public class TrainingPane extends GraphicsPane {
         speedLabel.setLabel("Agility: " + monster.getSpeed());
         defenseLabel.setLabel("Defense: " + monster.getDefense());
         fatigueLabel.setLabel("Fatigue: " + monster.getFatigue());
+        updateMonsterPreview();
     }
 
+    private void addMonsterPreview() {
+        monsterPreviewBox = new GRect(200, 80);
+        monsterPreviewBox.setFilled(true);
+        monsterPreviewBox.setFillColor(new Color(0, 0, 0, 120));
+        monsterPreviewBox.setLocation(777, 140);  // above the stat window
+        monsterPreviewBox.setLineWidth(0);
+        monsterPreviewBox.setColor(new Color(0, 0, 0, 0));
+
+        monsterPreviewLabel = new GLabel("", monsterPreviewBox.getX() + 10, monsterPreviewBox.getY() + 20);
+        monsterPreviewLabel.setFont("Arial-14");
+        monsterPreviewLabel.setColor(Color.WHITE);
+
+        contents.add(monsterPreviewBox);
+        contents.add(monsterPreviewLabel);
+        mainScreen.add(monsterPreviewBox);
+        mainScreen.add(monsterPreviewLabel);
+
+        updateMonsterPreview();
+    }
+
+    private void updateMonsterPreview() {
+        if (monsterPreviewLabel == null || monster == null) return;
+
+        String text =
+                "Monster: " + monster.getMonsterType() +
+                "  STR " + monster.getStrength() +
+                "  AGI " + monster.getSpeed() +
+                "  DEF " + monster.getDefense() +
+                "  HP " + monster.getHealth() +
+                "  FAT " + monster.getFatigue();
+
+        monsterPreviewLabel.setLabel(text);
+    }
 
     // =============================================================
     // PREVIEW HELPERS
@@ -344,6 +412,38 @@ public class TrainingPane extends GraphicsPane {
         animateStatIncrease(fatigueLabel, oldF, newF);
 
         clearPreviews();
+
+        int fatigueLost = oldF - newF;
+        updateDescription("Resting: -" + fatigueLost + " Fatigue. Your monster takes a break to recover.");
+        updateMonsterPreview();
+    }
+
+    private void updateModeDescription() {
+        if (descriptionLabel == null) return;
+
+        switch (button) {
+            case TRAIN:
+                updateDescription("Training menu: press Select to start training your monster.");
+                break;
+            case REST:
+                updateDescription("Rest: press Select to lower your monster's fatigue.");
+                break;
+            case BATTLE:
+                updateDescription("Battle: press Select to move toward a battle using your current stats.");
+                break;
+            case STRENGTH:
+                updateDescription("Strength training: increases Strength, but adds Fatigue.");
+                break;
+            case AGILITY:
+                updateDescription("Agility training: increases Agility, but adds Fatigue.");
+                break;
+            case DEFENSE:
+                updateDescription("Defense training: increases Defense, but adds Fatigue.");
+                break;
+            case BACK:
+                updateDescription("Back: return to the main training menu.");
+                break;
+        }
     }
 
 
@@ -439,6 +539,7 @@ public class TrainingPane extends GraphicsPane {
         else if (button == TrainingButton.AGILITY) showAgilityPreview();
         else if (button == TrainingButton.DEFENSE) showDefensePreview();
         else clearPreviews();
+        updateModeDescription();
     }
 
 
@@ -466,11 +567,12 @@ public class TrainingPane extends GraphicsPane {
         else if (button == TrainingButton.AGILITY) showAgilityPreview();
         else if (button == TrainingButton.DEFENSE) showDefensePreview();
         else clearPreviews();
+        updateModeDescription();
     }
 
 
     private void BattleDifficultySelect() {
         // TODO for future
+        updateDescription("Battle mode: this will use your current stats to fight an enemy (coming soon).");
     }
-
 }
