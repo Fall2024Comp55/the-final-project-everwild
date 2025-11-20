@@ -75,14 +75,16 @@ public class TrainingPane extends GraphicsPane {
         if (monster.getMonsterType() != MonsterType.CLAYGUY) return;
 
         if (isStrongForm) {
-            monsterPreviewImage.setImage("StrongerCuteMonster.png");   // strong form
+            monsterPreviewImage.setImage("StrongerCuteMonster.png");
         } else {
-            monsterPreviewImage.setImage("CuteMonster.png");           // normal form
+            monsterPreviewImage.setImage("CuteMonster.png");
         }
 
-        monsterPreviewImage.setSize(150, 150); 
-        monsterPreviewImage.setLocation(700, 100);
+        // MUST resize after setImage()
+        monsterPreviewImage.setSize(180, 180);
+        monsterPreviewImage.setLocation(600, 50);
     }
+
 
 
     // =============================================================
@@ -232,11 +234,11 @@ public class TrainingPane extends GraphicsPane {
     }
 
     private void addMonsterPreviewImage() {
-        // Default: normal clayguy picture
         monsterPreviewImage = new GImage("CuteMonster.png");
 
-        monsterPreviewImage.scale(0.40);  // match your UI
-        monsterPreviewImage.setLocation(700, 100); // adjust if needed
+        // NEVER use scale() here
+        monsterPreviewImage.setSize(180, 180); 
+        monsterPreviewImage.setLocation(600, 50);
 
         contents.add(monsterPreviewImage);
         mainScreen.add(monsterPreviewImage);
