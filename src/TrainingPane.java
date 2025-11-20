@@ -71,17 +71,19 @@ public class TrainingPane extends GraphicsPane {
     }
 
     private void updateMonsterPicture() {
-        // only applies to Clayguy
+
         if (monster.getMonsterType() != MonsterType.CLAYGUY) return;
 
         if (isStrongForm) {
-            monsterPreviewImage.setImage("CuteMonster.png");
+            monsterPreviewImage.setImage("StrongerCuteMonster.png");   // strong form
         } else {
-            monsterPreviewImage.setImage("StrongerCuteMonster.png");
+            monsterPreviewImage.setImage("CuteMonster.png");           // normal form
         }
 
-        monsterPreviewImage.scale(0.40);  
+        monsterPreviewImage.setSize(150, 150); 
+        monsterPreviewImage.setLocation(700, 100);
     }
+
 
     // =============================================================
     // DIFFICULTY LABEL
@@ -179,20 +181,6 @@ public class TrainingPane extends GraphicsPane {
     // STAT WINDOW + PREVIEW LABELS
     // =============================================================
     private void addStatWindow() {
-
-        GRect statBox = new GRect(200, 300);
-        statBox.setFilled(true);
-        statBox.setFillColor(new Color(91, 87, 75));
-        statBox.setLocation(777, 240);
-        statBox.setLineWidth(0);
-        statBox.setColor(new Color(0,0,0,0));
-
-
-
-        contents.add(statBox);
-        mainScreen.add(statBox);
-
-        // Real stat labels
         strengthLabel = new GLabel("", 790, 300);
         speedLabel = new GLabel("", 790, 340);
         defenseLabel = new GLabel("", 790, 380);
@@ -248,7 +236,7 @@ public class TrainingPane extends GraphicsPane {
         monsterPreviewImage = new GImage("CuteMonster.png");
 
         monsterPreviewImage.scale(0.40);  // match your UI
-        monsterPreviewImage.setLocation(820, 140); // adjust if needed
+        monsterPreviewImage.setLocation(700, 100); // adjust if needed
 
         contents.add(monsterPreviewImage);
         mainScreen.add(monsterPreviewImage);
