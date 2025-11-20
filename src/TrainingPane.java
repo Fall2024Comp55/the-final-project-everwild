@@ -36,6 +36,9 @@ public class TrainingPane extends GraphicsPane {
     // Monster preview (top-right)
     private GRect monsterPreviewBox;
     private GLabel monsterPreviewLabel;
+    private GImage monsterPreviewImage;
+    private boolean isStrongForm = false;
+
     private GDimension selectButtonSize = new GDimension(120, 50);
     private TrainingButton button;
 
@@ -51,8 +54,8 @@ public class TrainingPane extends GraphicsPane {
     public void showContent() {
         addBackground();  
         addButtons();
-        addStatWindow();
-        addMonsterPreview();     // top-right temp monster
+        addStatWindow(); 
+        addMonsterPreviewImage(); // top-right temp monster
         addDifficultyLabel();
         addDescriptionBox();     // bottom-left description area
         clearPreviews();         // no preview at start
@@ -67,6 +70,18 @@ public class TrainingPane extends GraphicsPane {
         contents.clear();
     }
 
+    private void updateMonsterPicture() {
+        // only applies to Clayguy
+        if (monster.getMonsterType() != MonsterType.CLAYGUY) return;
+
+        if (isStrongForm) {
+            monsterPreviewImage.setImage("CuteMonster.png");
+        } else {
+            monsterPreviewImage.setImage("StrongerCuteMonster.png");
+        }
+
+        monsterPreviewImage.scale(0.40);  
+    }
 
     // =============================================================
     // DIFFICULTY LABEL
@@ -228,25 +243,17 @@ public class TrainingPane extends GraphicsPane {
         updateMonsterPreview();
     }
 
-    private void addMonsterPreview() {
-        monsterPreviewBox = new GRect(200, 80);
-        monsterPreviewBox.setFilled(true);
-        monsterPreviewBox.setFillColor(new Color(0, 0, 0, 120));
-        monsterPreviewBox.setLocation(777, 140);  // above the stat window
-        monsterPreviewBox.setLineWidth(0);
-        monsterPreviewBox.setColor(new Color(0, 0, 0, 0));
+    private void addMonsterPreviewImage() {
+        // Default: normal clayguy picture
+        monsterPreviewImage = new GImage("CuteMonster.png");
 
-        monsterPreviewLabel = new GLabel("", monsterPreviewBox.getX() + 10, monsterPreviewBox.getY() + 20);
-        monsterPreviewLabel.setFont("Arial-14");
-        monsterPreviewLabel.setColor(Color.WHITE);
+        monsterPreviewImage.scale(0.40);  // match your UI
+        monsterPreviewImage.setLocation(820, 140); // adjust if needed
 
-        contents.add(monsterPreviewBox);
-        contents.add(monsterPreviewLabel);
-        mainScreen.add(monsterPreviewBox);
-        mainScreen.add(monsterPreviewLabel);
-
-        updateMonsterPreview();
+        contents.add(monsterPreviewImage);
+        mainScreen.add(monsterPreviewImage);
     }
+
 
     private void updateMonsterPreview() {
         if (monsterPreviewLabel == null || monster == null) return;
@@ -330,6 +337,8 @@ public class TrainingPane extends GraphicsPane {
     // TRAINING METHODS WITH ANIMATION
     // =============================================================
     private void trainStrength() {
+    	isStrongForm = true;
+    	updateMonsterPicture();
 
         int oldS = monster.getStrength();
         int oldF = monster.getFatigue();
