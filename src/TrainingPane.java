@@ -86,6 +86,20 @@ public class TrainingPane extends GraphicsPane {
         monsterPreviewImage.setLocation(730, 10);
     }
 
+    private void showSleepingMonster() {
+        if (monster.getMonsterType() != MonsterType.CLAYGUY) return;
+
+        monsterPreviewImage.setImage("SleepCuteMonster.png");
+        monsterPreviewImage.setSize(230, 190);    // same size as normal
+        monsterPreviewImage.setLocation(730, 10); // same location as normal
+    }
+    private void showNormalMonster() {
+        if (monster.getMonsterType() != MonsterType.CLAYGUY) return;
+
+        monsterPreviewImage.setImage("CuteMonster.png");
+        monsterPreviewImage.setSize(230, 190);
+        monsterPreviewImage.setLocation(730, 10);
+    }
 
 
     // =============================================================
@@ -464,6 +478,7 @@ public class TrainingPane extends GraphicsPane {
             switch (button) {
 
                 case TRAIN:
+                	showNormalMonster();
                     button = TrainingButton.STRENGTH;
                     selectButton.setImage(button.toString());
                     switchBackgroundToTrain();
@@ -487,6 +502,7 @@ public class TrainingPane extends GraphicsPane {
 
                 case REST:
                     switchBackgroundToRest();
+                    showSleepingMonster();
                     RestMonster();
                     break;
 
