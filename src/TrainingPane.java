@@ -237,8 +237,8 @@ public class TrainingPane extends GraphicsPane {
         monsterPreviewImage = new GImage("CuteMonster.png");
 
         // NEVER use scale() here
-        monsterPreviewImage.setSize(180, 180); 
-        monsterPreviewImage.setLocation(600, 50);
+        monsterPreviewImage.setSize(230, 190); 
+        monsterPreviewImage.setLocation(730, 10);
 
         contents.add(monsterPreviewImage);
         mainScreen.add(monsterPreviewImage);
