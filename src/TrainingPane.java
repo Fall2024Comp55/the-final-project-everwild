@@ -71,7 +71,6 @@ public class TrainingPane extends GraphicsPane {
     }
 
     private void updateMonsterPicture() {
-
         if (monster.getMonsterType() != MonsterType.CLAYGUY) return;
 
         if (isStrongForm) {
@@ -80,9 +79,11 @@ public class TrainingPane extends GraphicsPane {
             monsterPreviewImage.setImage("CuteMonster.png");
         }
 
-        // MUST resize after setImage()
-        monsterPreviewImage.setSize(180, 180);
-        monsterPreviewImage.setLocation(600, 50);
+        // Use SAME SIZE as normal monster
+        monsterPreviewImage.setSize(230, 190);
+
+        // Use SAME LOCATION as normal monster
+        monsterPreviewImage.setLocation(730, 10);
     }
 
 
