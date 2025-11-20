@@ -98,8 +98,19 @@ public class MainApplication extends GraphicsProgram {
     }
 
     public void switchToBattleScreen() {
+
+        // 1. Remove TRAINING screen content if present
+        if (trainingPane != null) {
+            trainingPane.hideContent();
+        }
+
+        // 2. Recreate a fresh BattlePane so it loads monsters correctly
+        battlePane = new BattlePane(this);
+
+        // 3. Switch to battle
         switchToScreen(battlePane);
     }
+
 
     public void switchToWelcomeScreen() {
         switchToScreen(welcomePane);

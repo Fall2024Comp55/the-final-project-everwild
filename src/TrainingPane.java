@@ -507,9 +507,11 @@ public class TrainingPane extends GraphicsPane {
                     break;
 
                 case BATTLE:
+                	monsterPreviewImage.setVisible(false);
                     switchBackgroundToBattle();
                     BattleDifficultySelect();
                     clearPreviews();
+                    mainScreen.switchToBattleScreen();
                     break;
 
                 case BACK:

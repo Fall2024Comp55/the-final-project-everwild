@@ -2,5 +2,6 @@
 public enum MonsterType {
 	BILLABONG,
 	SOCKGUY,
-	CLAYGUY
+	CLAYGUY,
+	ENEMY
 }
