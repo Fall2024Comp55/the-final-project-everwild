@@ -14,8 +14,6 @@ public class WinScreen extends GraphicsPane {
         } else {
             screen = new GImage("lose.png");
         }
-
-        // center
         double x = (program.getWidth() - screen.getWidth()) / 2;
         double y = (program.getHeight() - screen.getHeight()) / 2;
         screen.setLocation(x, y);
