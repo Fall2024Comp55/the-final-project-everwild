@@ -37,7 +37,7 @@ public class BattlePane extends GraphicsPane {
             3,   // agility
             10,  // defense
             20,  // health
-            MonsterType.ENEMY   // you may need to add this to your enum
+            MonsterType.ENEMY  
         );
     }
 
