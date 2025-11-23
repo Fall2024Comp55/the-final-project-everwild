@@ -22,7 +22,7 @@ public class StoryPane extends GraphicsPane{
 	}
 
 	private void addBackground() {
-	    GImage background = new GImage("tempstorybackground.png", 0, 0);
+	    GImage background = new GImage("Story.jpeg", 0, 0);
 	    contents.add(background);    
 	    mainScreen.add(background); 
 	}
