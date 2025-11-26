@@ -60,4 +60,12 @@ public class Monster {
         }
         return "";
     }
+    public String getBattleImage() {
+        switch (monsterType) {
+            case BILLABONG: return "BuffBong.png";
+            case SOCKGUY:   return "ChildSleep.png";
+            case CLAYGUY:   return "BattleCuteMonster.png";
+        }
+        return "";
+    }
 }

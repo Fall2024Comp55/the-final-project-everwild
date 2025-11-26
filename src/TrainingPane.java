@@ -38,10 +38,13 @@ public class TrainingPane extends GraphicsPane {
     private GLabel monsterPreviewLabel;
     private GImage monsterPreviewImage;
     private boolean isStrongForm = false;
+    private GImage monsterAboveButtons;
+
+    private GLabel turnLabel;
+    private int turns; // store the current number of turns
 
     private GDimension selectButtonSize = new GDimension(120, 50);
     private TrainingButton button;
-
 
     public TrainingPane(MainApplication mainScreen, Monster monster) {
         this.mainScreen = mainScreen;
@@ -49,10 +52,11 @@ public class TrainingPane extends GraphicsPane {
         this.button = TrainingButton.TRAIN;
     }
 
-
     @Override
     public void showContent() {
-        addBackground();  
+        addBackground(); 
+        addMonsterAboveButtons();
+        updateMonsterAboveButtons();
         addButtons();
         addStatWindow(); 
         addMonsterPreviewImage(); // top-right temp monster
@@ -92,19 +96,58 @@ public class TrainingPane extends GraphicsPane {
         monsterPreviewImage.setLocation(730, 10);
     }
 
-
-
     // =============================================================
     // DIFFICULTY LABEL
     // =============================================================
     private void addDifficultyLabel() {
         String text = "Difficulty: " + mainScreen.getDifficulty().toString();
-        difficultyLabel = new GLabel(text, 330, 450);
+        difficultyLabel = new GLabel(text, 330, 465);
         difficultyLabel.setFont("Arial-18");
         difficultyLabel.setColor(Color.WHITE);
 
         contents.add(difficultyLabel);
         mainScreen.add(difficultyLabel);
+    }
+
+    private void addMonsterAboveButtons() {
+        if (monster == null) return;
+
+        // Start with the normal image (Train mode)
+        monsterAboveButtons = new GImage(monster.getNormalImage());
+        monsterAboveButtons.setSize(230, 190); // adjust as needed
+        monsterAboveButtons.setLocation(500, 150); // adjust x/y to be above buttons
+
+        contents.add(monsterAboveButtons);
+        mainScreen.add(monsterAboveButtons);
+    }
+    private void updateDescriptionWithTurns(String actionText) {
+        int remaining = mainScreen.getTurnsRemaining();
+        updateDescription(actionText + "  |  Turns remaining: " + remaining);
+
+        if (remaining <= 0) {
+            System.out.println("Turns exhausted! Switching to battle...");
+            mainScreen.switchToBattleScreen();
+        }
+    }
+
+
+    private void updateMonsterAboveButtons() {
+        if (monsterAboveButtons == null || monster == null) return;
+
+        switch(button) {
+            case TRAIN:
+                monsterAboveButtons.setImage(monster.getNormalImage());
+                break;
+            case REST:
+                monsterAboveButtons.setImage(monster.getSleepImage());
+                break;
+            case BATTLE:
+                monsterAboveButtons.setImage(monster.getBattleImage()); // ready to fight
+                break;
+        }
+
+        monsterAboveButtons.setSize(230, 190); // keep consistent
+        monsterAboveButtons.setLocation(250, 150);
     }
 
     private void addDescriptionBox() {
@@ -125,13 +168,15 @@ public class TrainingPane extends GraphicsPane {
         mainScreen.add(descriptionBox);
         mainScreen.add(descriptionLabel);
 
-        updateDescription("Training menu: use the arrows to select TRAIN, REST, or BATTLE.");
+        updateDescriptionWithTurns("Training menu: use the arrows to select TRAIN, REST, or BATTLE.");
     }
+
     private void updateDescription(String text) {
         if (descriptionLabel != null) {
             descriptionLabel.setLabel(text);
         }
     }
+
     // =============================================================
     // BUTTONS
     // =============================================================
@@ -157,6 +202,7 @@ public class TrainingPane extends GraphicsPane {
         mainScreen.add(rightButton);
         mainScreen.add(selectButton);
     }
+    
     // =============================================================
     // BACKGROUND
     // =============================================================
@@ -183,7 +229,6 @@ public class TrainingPane extends GraphicsPane {
         background.setSize(mainScreen.getWidth() - 15, mainScreen.getHeight() - 30);
     }
 
-
     // =============================================================
     // STAT WINDOW + PREVIEW LABELS
     // =============================================================
@@ -197,7 +242,6 @@ public class TrainingPane extends GraphicsPane {
         speedLabel.setFont(mainScreen.fontLarge());
         defenseLabel.setFont(mainScreen.fontLarge());
         fatigueLabel.setFont(mainScreen.fontLarge());
-
 
         mainScreen.add(strengthLabel);
         mainScreen.add(speedLabel);
@@ -222,7 +266,6 @@ public class TrainingPane extends GraphicsPane {
         defensePreview.setFont(mainScreen.fontSmall());
         fatiguePreview.setFont(mainScreen.fontSmall());
 
-
         mainScreen.add(strengthPreview);
         mainScreen.add(speedPreview);
         mainScreen.add(defensePreview);
@@ -230,7 +273,6 @@ public class TrainingPane extends GraphicsPane {
 
         updateStatDisplay();
     }
-
 
     private void updateStatDisplay() {
         strengthLabel.setLabel("Strength: " + monster.getStrength());
@@ -242,15 +284,12 @@ public class TrainingPane extends GraphicsPane {
 
     private void addMonsterPreviewImage() {
         monsterPreviewImage = new GImage(monster.getNormalImage());
-
-     
         monsterPreviewImage.setSize(230, 190); 
         monsterPreviewImage.setLocation(730, 10);
 
         contents.add(monsterPreviewImage);
         mainScreen.add(monsterPreviewImage);
     }
-
 
     private void updateMonsterPreview() {
         if (monsterPreviewLabel == null || monster == null) return;
@@ -284,7 +323,6 @@ public class TrainingPane extends GraphicsPane {
                    (d == Difficulty.CHILD) ? 1 : 1;
 
         strengthPreview.setLabel("+" + gain);
-        // fatigue also increases
         int fatGain = (d == Difficulty.NORMAL) ? 2 : 1;
         fatiguePreview.setLabel("+" + fatGain);
     }
@@ -297,7 +335,6 @@ public class TrainingPane extends GraphicsPane {
                    (d == Difficulty.CHILD) ? 1 : 1;
 
         speedPreview.setLabel("+" + gain);
-
         int fatGain = (d == Difficulty.NORMAL) ? 2 : 1;
         fatiguePreview.setLabel("+" + fatGain);
     }
@@ -310,11 +347,9 @@ public class TrainingPane extends GraphicsPane {
                    (d == Difficulty.CHILD) ? 1 : 1;
 
         defensePreview.setLabel("+" + gain);
-
         int fatGain = (d == Difficulty.NORMAL) ? 2 : 1;
         fatiguePreview.setLabel("+" + fatGain);
     }
-
 
     // =============================================================
     // ANIMATION
@@ -329,13 +364,12 @@ public class TrainingPane extends GraphicsPane {
         }
     }
 
-
     // =============================================================
     // TRAINING METHODS WITH ANIMATION
     // =============================================================
     private void trainStrength() {
-    	isStrongForm = true;
-    	updateMonsterPicture();
+        isStrongForm = true;
+        updateMonsterPicture();
 
         int oldS = monster.getStrength();
         int oldF = monster.getFatigue();
@@ -352,10 +386,13 @@ public class TrainingPane extends GraphicsPane {
             if (Math.random() < 0.75) monster.setStrength(oldS + 1);
             monster.setFatigue(oldF + 2);
         }
+        updateDescriptionWithTurns("Your monster trained Strength!"); 
 
         animateStatIncrease(strengthLabel, oldS, monster.getStrength());
         animateStatIncrease(fatigueLabel, oldF, monster.getFatigue());
         clearPreviews();
+
+        decrementTurns(); 
     }
 
     private void trainAgility() {
@@ -375,10 +412,13 @@ public class TrainingPane extends GraphicsPane {
             if (Math.random() < 0.75) monster.setSpeed(oldA + 1);
             monster.setFatigue(oldF + 2);
         }
+        updateDescriptionWithTurns("Your monster trained Agility!");
 
         animateStatIncrease(speedLabel, oldA, monster.getSpeed());
         animateStatIncrease(fatigueLabel, oldF, monster.getFatigue());
         clearPreviews();
+
+        decrementTurns(); 
     }
 
     private void trainDefense() {
@@ -398,12 +438,14 @@ public class TrainingPane extends GraphicsPane {
             if (Math.random() < 0.75) monster.setDefense(oldD + 1);
             monster.setFatigue(oldF + 2);
         }
+        updateDescriptionWithTurns("Your monster trained Defense!");
 
         animateStatIncrease(defenseLabel, oldD, monster.getDefense());
         animateStatIncrease(fatigueLabel, oldF, monster.getFatigue());
         clearPreviews();
-    }
 
+        decrementTurns();
+    }
 
     // =============================================================
     // REST
@@ -420,10 +462,15 @@ public class TrainingPane extends GraphicsPane {
         clearPreviews();
 
         int fatigueLost = oldF - newF;
-        updateDescription("Resting: -" + fatigueLost + " Fatigue. Your monster takes a break to recover.");
+        updateDescriptionWithTurns("Resting: -" + fatigueLost + " Fatigue. Your monster takes a break to recover.");
         updateMonsterPreview();
+
+        decrementTurns(); 
     }
 
+    // =============================================================
+    // MODE DESCRIPTION
+    // =============================================================
     private void updateModeDescription() {
         if (descriptionLabel == null) return;
 
@@ -452,7 +499,6 @@ public class TrainingPane extends GraphicsPane {
         }
     }
 
-
     // =============================================================
     // MOUSE CLICK HANDLING
     // =============================================================
@@ -470,7 +516,7 @@ public class TrainingPane extends GraphicsPane {
             switch (button) {
 
                 case TRAIN:
-                	showNormalMonster();
+                    showNormalMonster();
                     button = TrainingButton.STRENGTH;
                     selectButton.setImage(button.toString());
                     switchBackgroundToTrain();
@@ -499,9 +545,8 @@ public class TrainingPane extends GraphicsPane {
                     break;
 
                 case BATTLE:
-                	monsterPreviewImage.setVisible(false);
+                    monsterPreviewImage.setVisible(false);
                     switchBackgroundToBattle();
-                    BattleDifficultySelect();
                     clearPreviews();
                     mainScreen.switchToBattleScreen();
                     break;
@@ -518,7 +563,6 @@ public class TrainingPane extends GraphicsPane {
 
         }
     }
-
 
     // =============================================================
     // CYCLING BUTTONS (LEFT/RIGHT)
@@ -549,40 +593,50 @@ public class TrainingPane extends GraphicsPane {
         else if (button == TrainingButton.AGILITY) showAgilityPreview();
         else if (button == TrainingButton.DEFENSE) showDefensePreview();
         else clearPreviews();
-        updateModeDescription();
     }
-
 
     private void changeButtonOptionLeft() {
 
         switch (button) {
             case TRAIN: button = TrainingButton.BATTLE; break;
-            case BATTLE: button = TrainingButton.REST; break;
             case REST: button = TrainingButton.TRAIN; break;
+            case BATTLE: button = TrainingButton.REST; break;
 
             case STRENGTH: button = TrainingButton.BACK; break;
-            case BACK: button = TrainingButton.DEFENSE; break;
-            case DEFENSE: button = TrainingButton.AGILITY; break;
             case AGILITY: button = TrainingButton.STRENGTH; break;
+            case DEFENSE: button = TrainingButton.AGILITY; break;
+            case BACK: button = TrainingButton.DEFENSE; break;
         }
 
         selectButton.setImage(button.toString());
         selectButton.setSize(selectButtonSize.getWidth(), selectButtonSize.getHeight());
 
+        // backgrounds
         if (button == TrainingButton.REST) switchBackgroundToRest();
         else if (button == TrainingButton.BATTLE) switchBackgroundToBattle();
         else switchBackgroundToTrain();
 
+        // previews
         if (button == TrainingButton.STRENGTH) showStrengthPreview();
         else if (button == TrainingButton.AGILITY) showAgilityPreview();
         else if (button == TrainingButton.DEFENSE) showDefensePreview();
         else clearPreviews();
-        updateModeDescription();
     }
 
+    // =============================================================
+    // TURNS DECREMENT LOGIC (NEW)
+    // =============================================================
+    private void decrementTurns() {
+        int remaining = mainScreen.getTurnsRemaining();
+        remaining--; // use one turn
+        mainScreen.setTurnsRemaining(remaining);
 
-    private void BattleDifficultySelect() {
-        // TODO for future
-        updateDescription("Battle mode: this will use your current stats to fight an enemy (coming soon).");
+        System.out.println("Turns remaining: " + remaining);
+
+        if (remaining <= 0) {
+            System.out.println("Turns exhausted! Switching to battle...");
+            mainScreen.switchToBattleScreen();
+        }
     }
+
 }

@@ -10,14 +10,16 @@ public class WinScreen extends GraphicsPane {
         this.program = app;
 
         if (playerWon) {
-            screen = new GImage("win.png");
+            screen = new GImage("win.jpg");
         } else {
-            screen = new GImage("lose.png");
+            screen = new GImage("lose.jpg");
         }
-        double x = (program.getWidth() - screen.getWidth()) / 2;
-        double y = (program.getHeight() - screen.getHeight()) / 2;
-        screen.setLocation(x, y);
+
+        // Resize image to fit the window
+        screen.setSize(program.getWidth(), program.getHeight());
+
     }
+
 
     @Override
     public void showContent() {

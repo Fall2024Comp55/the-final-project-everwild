@@ -143,6 +143,15 @@ public class MainApplication extends GraphicsProgram {
         newScreen.showContent();
         currentScreen = newScreen;
     }
+    public void switchToWinScreen(boolean playerWon) {
+        if (currentScreen != null) {
+            currentScreen.hideContent();
+        }
+        WinScreen winScreen = new WinScreen(this, playerWon);
+        winScreen.showContent();
+        currentScreen = winScreen;
+    }
+
 
 
     // =============================================================

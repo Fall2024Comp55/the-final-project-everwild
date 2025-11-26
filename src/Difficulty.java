@@ -5,11 +5,11 @@ public enum Difficulty {
 	CHILD(50),
 	NORMAL(20);
 	
-	private final int Turns;
-	private Difficulty(int Turns) {
-		this.Turns=Turns;
+	private final int turns;
+	private Difficulty(int turns) {
+	    this.turns = turns;
 	}
-	public int getTurns () {
-		return Turns;
+	public int getTurns() {
+	    return turns;
 	}
 }

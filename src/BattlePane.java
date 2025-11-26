@@ -9,6 +9,14 @@ public class BattlePane extends GraphicsPane {
 
 	private Monster playerMonster;
 	private Monster enemyMonster;
+	
+    private GLabel strengthLabel;
+    private GLabel speedLabel;
+    private GLabel defenseLabel;
+    private GLabel fatigueLabel;
+    private GLabel difficultyLabel;
+    private GLabel typeLabel;
+    private GLabel HealthLabel;
 
 	private boolean battleStarted = false;
 
@@ -64,7 +72,9 @@ public class BattlePane extends GraphicsPane {
 
         addMonsterPreview();
         addDescriptionBox();
-        updateDescription("Battle mode: your monster will fight using its current stats. Click the Battle button to begin.");
+        battleButton.setVisible(false);
+
+        updateDescription("Battle mode: your monster will fight using its current stats. Click your monster to start!");
     }
 
     @Override
@@ -77,14 +87,14 @@ public class BattlePane extends GraphicsPane {
     
     private void addBattleMonsters() {
         // Player monster on LEFT
-        playerImg = new GImage("BattleCuteMonster.png"); 
+        playerImg = new GImage(playerMonster.getBattleImage()); 
         playerImg.setSize(220, 200);
         playerImg.setLocation(80, 260);
 
         // Enemy monster on RIGHT (static built-in enemy)
         enemyImg = new GImage("ENEMY.png");
         enemyImg.setSize(220, 200);
-        enemyImg.setLocation(700, 260);
+        enemyImg.setLocation(530, 260);
 
         contents.add(playerImg);
         contents.add(enemyImg);
@@ -124,52 +134,72 @@ public class BattlePane extends GraphicsPane {
     // MONSTER PREVIEW (TOP-RIGHT)
     // =============================================================
     private void addMonsterPreview() {
-        monsterPreviewBox = new GRect(200, 80);
+        monsterPreviewBox = new GRect(215, 320); // taller to fit all stats
         monsterPreviewBox.setFilled(true);
         monsterPreviewBox.setFillColor(new Color(0, 0, 0, 120));
-        monsterPreviewBox.setLocation(777, 140);
+        monsterPreviewBox.setLocation(777, 220);
         monsterPreviewBox.setLineWidth(0);
 
-        // --- Monster image shown inside the preview ---
-        monsterPreviewImage = new GImage("BattleCuteMonster.png");
+        // Monster image
+        monsterPreviewImage = new GImage(playerMonster.getBattleImage());
         monsterPreviewImage.setSize(230, 190);
         monsterPreviewImage.setLocation(730, 10);
-        
-        monsterPreviewLabel = new GLabel("", 790, 270);
-        monsterPreviewLabel.setFont("Arial-14");
-        monsterPreviewLabel.setColor(Color.WHITE);
 
+        // Stats labels positions
+        int startX = 790;
+        int startY = 300;
+        int lineHeight = 20;
+
+        typeLabel     = new GLabel("", startX, startY);
+        strengthLabel = new GLabel("", startX, startY + 1*lineHeight);
+        speedLabel    = new GLabel("", startX, startY + 2*lineHeight);
+        defenseLabel  = new GLabel("", startX, startY + 3*lineHeight);
+        HealthLabel   = new GLabel("", startX, startY + 4*lineHeight);
+        fatigueLabel  = new GLabel("", startX, startY + 5*lineHeight);
+
+        typeLabel.setColor(Color.WHITE);
+        strengthLabel.setColor(Color.WHITE);
+        speedLabel.setColor(Color.WHITE);
+        defenseLabel.setColor(Color.WHITE);
+        HealthLabel.setColor(Color.WHITE);
+        fatigueLabel.setColor(Color.WHITE);
+
+        // Add to contents and main screen
         contents.add(monsterPreviewBox);
-        contents.add(monsterPreviewImage);   // ← ADD THIS
-        contents.add(monsterPreviewLabel);
+        contents.add(monsterPreviewImage);
+        contents.add(typeLabel);
+        contents.add(strengthLabel);
+        contents.add(speedLabel);
+        contents.add(defenseLabel);
+        contents.add(HealthLabel);
+        contents.add(fatigueLabel);
 
         mainScreen.add(monsterPreviewBox);
-        mainScreen.add(monsterPreviewImage); // ← ADD THIS
-        mainScreen.add(monsterPreviewLabel);
+        mainScreen.add(monsterPreviewImage);
+        mainScreen.add(typeLabel);
+        mainScreen.add(strengthLabel);
+        mainScreen.add(speedLabel);
+        mainScreen.add(defenseLabel);
+        mainScreen.add(HealthLabel);
+        mainScreen.add(fatigueLabel);
 
         updateMonsterPreview();
     }
 
 
+
+
     private void updateMonsterPreview() {
-        if (monsterPreviewLabel == null) return;
+        if (playerMonster == null) return;
 
-        Monster m = mainScreen.getMonster();
-        if (m == null) {
-            monsterPreviewLabel.setLabel("Monster: (none selected)");
-            return;
-        }
-
-        String text =
-                "Monster: " + m.getMonsterType() +
-                "  STR " + m.getStrength() +
-                "  AGI " + m.getSpeed() +
-                "  DEF " + m.getDefense() +
-                "  HP " + m.getHealth() +
-                "  FAT " + m.getFatigue();
-
-        monsterPreviewLabel.setLabel(text);
+        typeLabel.setLabel("Monster: " + playerMonster.getMonsterType());
+        strengthLabel.setLabel("STR: " + playerMonster.getStrength());
+        speedLabel.setLabel("AGI: " + playerMonster.getSpeed());
+        defenseLabel.setLabel("DEF: " + playerMonster.getDefense());
+        HealthLabel.setLabel("HP: " + playerMonster.getHealth());
+        fatigueLabel.setLabel("FAT: " + playerMonster.getFatigue());
     }
+
 
     // =============================================================
     // CLICK HANDLING
@@ -179,15 +209,17 @@ public class BattlePane extends GraphicsPane {
         GObject clicked = mainScreen.getElementAtLocation(e.getX(), e.getY());
         if (clicked == null) return;
 
-        if (clicked == battleButton && !battleStarted) {
+        // Start battle only when player clicks their monster
+        if (clicked == playerImg && !battleStarted) {
             battleStarted = true;
             updateDescription("Combat starting! Your monster charges into battle!");
             startBattle();
         }
     }
+
     private void startBattle() {
         new Thread(() -> {
-            while (playerMonster.getDefense() > 0 && enemyMonster.getDefense() > 0) {
+            while (playerMonster.getHealth() > 0 && enemyMonster.getHealth() > 0) {
 
                 // Move both toward each other
                 playerImg.move(4, 0);  // right
@@ -196,12 +228,18 @@ public class BattlePane extends GraphicsPane {
                 // Check for collision
                 if (playerImg.getBounds().intersects(enemyImg.getBounds())) {
 
-                    // Damage both monsters
-                    playerMonster.setDefense(playerMonster.getDefense() - 1);
-                    enemyMonster.setDefense(enemyMonster.getDefense() - 1);
+                    // Calculate damage
+                    int playerDamage = Math.max(1, playerMonster.getStrength() - enemyMonster.getDefense());
+                    int enemyDamage  = Math.max(1, enemyMonster.getStrength() - playerMonster.getDefense());
 
+                    // Apply damage to health
+                    playerMonster.setHealth(Math.max(0, playerMonster.getHealth() - enemyDamage));
+                    enemyMonster.setHealth(Math.max(0, enemyMonster.getHealth() - playerDamage));
+
+                    // Update preview
                     updateMonsterPreview();
-                    updateDescription("They collided! Both took damage!");
+
+                    updateDescription("They collided!");
 
                     // Push them apart slightly
                     playerImg.move(-10, 0);
@@ -217,19 +255,25 @@ public class BattlePane extends GraphicsPane {
             finishBattle();
         }).start();
     }
+
     private void finishBattle() {
-        if (playerMonster.getDefense() <= 0 && enemyMonster.getDefense() <= 0) {
+        if (playerMonster.getHealth() <= 0 && enemyMonster.getHealth() <= 0) {
             updateDescription("Both monsters fainted! It's a draw!");
-        }
-        else if (playerMonster.getDefense() <= 0) {
+            mainScreen.switchToWinScreen(false); // treat draw as lose or create a draw screen
+        } 
+        else if (playerMonster.getHealth() <= 0) {
             updateDescription("Your monster fainted... you lost the battle!");
-        }
+            mainScreen.switchToWinScreen(false); // lose
+        } 
         else {
             updateDescription("You won! The enemy monster fainted!");
+            mainScreen.switchToWinScreen(true); // win
         }
 
         battleStarted = false;
     }
+
+
 
 
 }
