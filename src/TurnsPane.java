@@ -12,6 +12,8 @@ public class TurnsPane extends GraphicsPane{
 	}
 	private GImage background;
 	private GLabel turnCount;
+	private Monster monster; 
+
 	
 	@Override
 	public void showContent() {
@@ -49,6 +51,13 @@ public class TurnsPane extends GraphicsPane{
 			mainScreen.switchToTrainingScreen(mainScreen.getMonster());
 		//else
 			//mainScreen.switchToFinalBattleScreen;
+	}
+	public void setMonster(Monster monster) {
+	    this.monster = monster;
+	}
+
+	public Monster getMonster() {
+	    return this.monster;
 	}
 	
 }

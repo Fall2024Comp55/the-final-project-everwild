@@ -71,35 +71,27 @@ public class TrainingPane extends GraphicsPane {
     }
 
     private void updateMonsterPicture() {
-        if (monster.getMonsterType() != MonsterType.CLAYGUY) return;
-
-        if (isStrongForm) {
-            monsterPreviewImage.setImage("StrongerCuteMonster.png");
-        } else {
-            monsterPreviewImage.setImage("CuteMonster.png");
-        }
-
-        // Use SAME SIZE as normal monster
+        if (monster == null) return;
+        String img = isStrongForm ? monster.getStrongImage() : monster.getNormalImage();
+        monsterPreviewImage.setImage(img);
         monsterPreviewImage.setSize(230, 190);
+        monsterPreviewImage.setLocation(730, 10);
+    }
 
-        // Use SAME LOCATION as normal monster
+    private void showNormalMonster() {
+        if (monster == null) return;
+        monsterPreviewImage.setImage(monster.getNormalImage());
+        monsterPreviewImage.setSize(230, 190);
         monsterPreviewImage.setLocation(730, 10);
     }
 
     private void showSleepingMonster() {
-        if (monster.getMonsterType() != MonsterType.CLAYGUY) return;
-
-        monsterPreviewImage.setImage("SleepCuteMonster.png");
-        monsterPreviewImage.setSize(230, 190);    // same size as normal
-        monsterPreviewImage.setLocation(730, 10); // same location as normal
-    }
-    private void showNormalMonster() {
-        if (monster.getMonsterType() != MonsterType.CLAYGUY) return;
-
-        monsterPreviewImage.setImage("CuteMonster.png");
+        if (monster == null) return;
+        monsterPreviewImage.setImage(monster.getSleepImage());
         monsterPreviewImage.setSize(230, 190);
         monsterPreviewImage.setLocation(730, 10);
     }
+
 
 
     // =============================================================
@@ -165,8 +157,6 @@ public class TrainingPane extends GraphicsPane {
         mainScreen.add(rightButton);
         mainScreen.add(selectButton);
     }
-
-
     // =============================================================
     // BACKGROUND
     // =============================================================
@@ -251,9 +241,9 @@ public class TrainingPane extends GraphicsPane {
     }
 
     private void addMonsterPreviewImage() {
-        monsterPreviewImage = new GImage("CuteMonster.png");
+        monsterPreviewImage = new GImage(monster.getNormalImage());
 
-        // NEVER use scale() here
+     
         monsterPreviewImage.setSize(230, 190); 
         monsterPreviewImage.setLocation(730, 10);
 

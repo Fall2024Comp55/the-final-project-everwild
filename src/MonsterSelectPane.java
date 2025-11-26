@@ -25,11 +25,11 @@ public class MonsterSelectPane extends GraphicsPane {
     }
 
     private void addMonsters() {
-        monster1 = new GImage("Baby.jpeg", 150, 250);
+        monster1 = new GImage("Billabong.png", 50, 200);
         monster2 = new GImage("Child.jpeg", 400, 250);
         monster3 = new GImage("CuteMonster.png", 650, 250);
 
-        monster1.scale(0.5);
+        monster1.scale(0.17);
         monster2.scale(0.5);
         monster3.scale(0.5);
 
@@ -60,14 +60,17 @@ public class MonsterSelectPane extends GraphicsPane {
         if (clicked == monster1) {
             System.out.println("Monster 1 selected!");
             selectedMonster = createMonster(MonsterType.BILLABONG);
+            selectedMonster.setImagePath("Billabong.png");
         } 
         else if (clicked == monster2) {
             System.out.println("Monster 2 selected!");
             selectedMonster = createMonster(MonsterType.SOCKGUY);
+            selectedMonster.setImagePath("Billabong.png");
         } 
         else if (clicked == monster3) {
             System.out.println("Monster 3 selected!");
             selectedMonster = createMonster(MonsterType.CLAYGUY);
+            selectedMonster.setImagePath("CuteMonster.png");
         }
 
         if (selectedMonster != null) {
