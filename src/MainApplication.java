@@ -216,6 +216,11 @@ public class MainApplication extends GraphicsProgram {
         return difficulty;
     }
 
+ // Global Cute Game Fonts
+    public String fontTitle() { return "Chalkduster-32"; }
+    public String fontLarge() { return "Chalkboard-24"; }
+    public String fontMedium() { return "Chalkboard-18"; }
+    public String fontSmall() { return "Chalkboard-16"; }
 
 
     

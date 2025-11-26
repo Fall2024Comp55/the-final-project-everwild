@@ -77,7 +77,7 @@ public class BattlePane extends GraphicsPane {
     
     private void addBattleMonsters() {
         // Player monster on LEFT
-        playerImg = new GImage("BattleCuteMonster.png");   // your battle version image
+        playerImg = new GImage("BattleCuteMonster.png"); 
         playerImg.setSize(220, 200);
         playerImg.setLocation(80, 260);
 

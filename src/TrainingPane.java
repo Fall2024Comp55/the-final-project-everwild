@@ -203,10 +203,11 @@ public class TrainingPane extends GraphicsPane {
         defenseLabel = new GLabel("", 790, 380);
         fatigueLabel = new GLabel("", 790, 420);
 
-        strengthLabel.setFont("Arial-18");
-        speedLabel.setFont("Arial-18");
-        defenseLabel.setFont("Arial-18");
-        fatigueLabel.setFont("Arial-18");
+        strengthLabel.setFont(mainScreen.fontLarge());
+        speedLabel.setFont(mainScreen.fontLarge());
+        defenseLabel.setFont(mainScreen.fontLarge());
+        fatigueLabel.setFont(mainScreen.fontLarge());
+
 
         mainScreen.add(strengthLabel);
         mainScreen.add(speedLabel);
@@ -226,10 +227,11 @@ public class TrainingPane extends GraphicsPane {
         defensePreview.setColor(previewColor);
         fatiguePreview.setColor(previewColor);
 
-        strengthPreview.setFont("Arial-16");
-        speedPreview.setFont("Arial-16");
-        defensePreview.setFont("Arial-16");
-        fatiguePreview.setFont("Arial-16");
+        strengthPreview.setFont(mainScreen.fontSmall());
+        speedPreview.setFont(mainScreen.fontSmall());
+        defensePreview.setFont(mainScreen.fontSmall());
+        fatiguePreview.setFont(mainScreen.fontSmall());
+
 
         mainScreen.add(strengthPreview);
         mainScreen.add(speedPreview);
