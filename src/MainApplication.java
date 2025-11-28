@@ -231,6 +231,10 @@ public class MainApplication extends GraphicsProgram {
     public String fontMedium() { return "Chalkboard-18"; }
     public String fontSmall() { return "Chalkboard-16"; }
 
+    public void switchToTrainingPane() {
+        TrainingPane training = new TrainingPane(this, monster);
+        switchToScreen(training);   // this is your existing pane-switching method
+    }
 
     
     public static void main(String[] args) {
