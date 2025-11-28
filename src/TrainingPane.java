@@ -397,8 +397,6 @@ public class TrainingPane extends GraphicsPane {
         animateStatIncrease(strengthLabel, oldS, monster.getStrength());
         animateStatIncrease(fatigueLabel, oldF, monster.getFatigue());
         clearPreviews();
-
-        decrementTurns(); 
     }
 
     private void trainAgility() {
@@ -423,8 +421,6 @@ public class TrainingPane extends GraphicsPane {
         animateStatIncrease(speedLabel, oldA, monster.getSpeed());
         animateStatIncrease(fatigueLabel, oldF, monster.getFatigue());
         clearPreviews();
-
-        decrementTurns(); 
     }
 
     private void trainDefense() {
@@ -449,8 +445,6 @@ public class TrainingPane extends GraphicsPane {
         animateStatIncrease(defenseLabel, oldD, monster.getDefense());
         animateStatIncrease(fatigueLabel, oldF, monster.getFatigue());
         clearPreviews();
-
-        decrementTurns();
     }
 
     // =============================================================
@@ -471,8 +465,6 @@ public class TrainingPane extends GraphicsPane {
         int fatigueLost = oldF - newF;
         updateDescriptionWithTurns("Resting: -" + fatigueLost + " Fatigue. Your monster takes a break to recover.");
         updateMonsterPreview();
-
-        decrementTurns(); 
     }
 
     // =============================================================
