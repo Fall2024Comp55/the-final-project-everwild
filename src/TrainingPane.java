@@ -102,7 +102,7 @@ public class TrainingPane extends GraphicsPane {
     private void addDifficultyLabel() {
         String text = "Difficulty: " + mainScreen.getDifficulty().toString();
         difficultyLabel = new GLabel(text, 330, 465);
-        difficultyLabel.setFont("Arial-18");
+        difficultyLabel.setFont(FontStyle.TITLE_FONT);
         difficultyLabel.setColor(Color.WHITE);
 
         contents.add(difficultyLabel);
@@ -111,8 +111,6 @@ public class TrainingPane extends GraphicsPane {
 
     private void addMonsterAboveButtons() {
         if (monster == null) return;
-
-        // Start with the normal image (Train mode)
         monsterAboveButtons = new GImage(monster.getNormalImage());
         monsterAboveButtons.setSize(230, 190); // adjust as needed
         monsterAboveButtons.setLocation(500, 150); // adjust x/y to be above buttons
@@ -160,7 +158,7 @@ public class TrainingPane extends GraphicsPane {
         descriptionBox.setColor(new Color(0, 0, 0, 0));
 
         descriptionLabel = new GLabel("", descriptionBox.getX() + 10, descriptionBox.getY() + 25);
-        descriptionLabel.setFont("Arial-16");
+        descriptionLabel.setFont(FontStyle.DESC_FONT);
         descriptionLabel.setColor(Color.WHITE);
 
         contents.add(descriptionBox);
@@ -238,10 +236,11 @@ public class TrainingPane extends GraphicsPane {
         defenseLabel = new GLabel("", 790, 380);
         fatigueLabel = new GLabel("", 790, 420);
 
-        strengthLabel.setFont(mainScreen.fontLarge());
-        speedLabel.setFont(mainScreen.fontLarge());
-        defenseLabel.setFont(mainScreen.fontLarge());
-        fatigueLabel.setFont(mainScreen.fontLarge());
+        strengthLabel.setFont(FontStyle.STAT_FONT);
+        speedLabel.setFont(FontStyle.STAT_FONT);
+        defenseLabel.setFont(FontStyle.STAT_FONT);
+        fatigueLabel.setFont(FontStyle.STAT_FONT);
+
 
         mainScreen.add(strengthLabel);
         mainScreen.add(speedLabel);
@@ -261,10 +260,11 @@ public class TrainingPane extends GraphicsPane {
         defensePreview.setColor(previewColor);
         fatiguePreview.setColor(previewColor);
 
-        strengthPreview.setFont(mainScreen.fontSmall());
-        speedPreview.setFont(mainScreen.fontSmall());
-        defensePreview.setFont(mainScreen.fontSmall());
-        fatiguePreview.setFont(mainScreen.fontSmall());
+        strengthPreview.setFont(FontStyle.DESC_FONT);
+        speedPreview.setFont(FontStyle.DESC_FONT);
+        defensePreview.setFont(FontStyle.DESC_FONT);
+        fatiguePreview.setFont(FontStyle.DESC_FONT);
+
 
         mainScreen.add(strengthPreview);
         mainScreen.add(speedPreview);
@@ -289,6 +289,12 @@ public class TrainingPane extends GraphicsPane {
 
         contents.add(monsterPreviewImage);
         mainScreen.add(monsterPreviewImage);
+       
+        strengthLabel.setFont(FontStyle.STAT_FONT);
+        speedLabel.setFont(FontStyle.STAT_FONT);
+        defenseLabel.setFont(FontStyle.STAT_FONT);
+        fatigueLabel.setFont(FontStyle.STAT_FONT);
+
     }
 
     private void updateMonsterPreview() {
@@ -458,6 +464,7 @@ public class TrainingPane extends GraphicsPane {
 
         monster.setFatigue(newF);
         animateStatIncrease(fatigueLabel, oldF, newF);
+        descriptionLabel.setFont(FontStyle.DESC_FONT);
 
         clearPreviews();
 
