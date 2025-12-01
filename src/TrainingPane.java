@@ -101,7 +101,7 @@ public class TrainingPane extends GraphicsPane {
     // =============================================================
     private void addDifficultyLabel() {
         String text = "Difficulty: " + mainScreen.getDifficulty().toString();
-        difficultyLabel = new GLabel(text, 330, 465);
+        difficultyLabel = new GLabel(text, 250, 465);
         difficultyLabel.setFont(FontStyle.TITLE_FONT);
         difficultyLabel.setColor(Color.WHITE);
 
