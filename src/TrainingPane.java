@@ -101,7 +101,7 @@ public class TrainingPane extends GraphicsPane {
     // =============================================================
     private void addDifficultyLabel() {
         String text = "Difficulty: " + mainScreen.getDifficulty().toString();
-        difficultyLabel = new GLabel(text, 330, 465);
+        difficultyLabel = new GLabel(text, 250, 465);
         difficultyLabel.setFont(FontStyle.TITLE_FONT);
         difficultyLabel.setColor(Color.WHITE);
 
@@ -392,6 +392,7 @@ public class TrainingPane extends GraphicsPane {
             if (Math.random() < 0.75) monster.setStrength(oldS + 1);
             monster.setFatigue(oldF + 2);
         }
+        decrementTurns();
         updateDescriptionWithTurns("Your monster trained Strength!"); 
 
         animateStatIncrease(strengthLabel, oldS, monster.getStrength());
@@ -416,6 +417,7 @@ public class TrainingPane extends GraphicsPane {
             if (Math.random() < 0.75) monster.setSpeed(oldA + 1);
             monster.setFatigue(oldF + 2);
         }
+        decrementTurns();
         updateDescriptionWithTurns("Your monster trained Agility!");
 
         animateStatIncrease(speedLabel, oldA, monster.getSpeed());
@@ -440,6 +442,7 @@ public class TrainingPane extends GraphicsPane {
             if (Math.random() < 0.75) monster.setDefense(oldD + 1);
             monster.setFatigue(oldF + 2);
         }
+        decrementTurns();
         updateDescriptionWithTurns("Your monster trained Defense!");
 
         animateStatIncrease(defenseLabel, oldD, monster.getDefense());
@@ -463,10 +466,20 @@ public class TrainingPane extends GraphicsPane {
         clearPreviews();
 
         int fatigueLost = oldF - newF;
+        decrementTurns();
         updateDescriptionWithTurns("Resting: -" + fatigueLost + " Fatigue. Your monster takes a break to recover.");
         updateMonsterPreview();
     }
 
+
+    // =============================================================
+    // BATTLE
+    // =============================================================
+    private BattleDifficulty selectBattleDifficulty(){
+    	return BattleDifficulty.BABY; //TEMPORARY, ADD MOUSE CAPTURE AND DIFFICULTY BUTTON SELECT
+    }
+    
+    
     // =============================================================
     // MODE DESCRIPTION
     // =============================================================
@@ -515,26 +528,45 @@ public class TrainingPane extends GraphicsPane {
             switch (button) {
 
                 case TRAIN:
+                	if (monster.getFatigue()>9){
+                		updateDescription("Your monster is too tired!");
+                		break;
+                	}
                     showNormalMonster();
                     button = TrainingButton.STRENGTH;
                     selectButton.setImage(button.toString());
                     switchBackgroundToTrain();
-                    clearPreviews();
+                    showStrengthPreview();
                     break;
 
                 case STRENGTH:
+                	if (monster.getFatigue()>9){
+                		updateDescription("Your monster is too tired!");
+                		break;
+                	}
                     switchBackgroundToTrain();
                     trainStrength();
+                    showStrengthPreview();
                     break;
 
                 case AGILITY:
+                	if (monster.getFatigue()>9){
+                		updateDescription("Your monster is too tired!");
+                		break;
+                	}
                     switchBackgroundToTrain();
                     trainAgility();
+                    showAgilityPreview();
                     break;
 
                 case DEFENSE:
+                	if (monster.getFatigue()>9){
+                		updateDescription("Your monster is too tired!");
+                		break;
+                	}
                     switchBackgroundToTrain();
                     trainDefense();
+                    showDefensePreview();
                     break;
 
                 case REST:
@@ -544,10 +576,16 @@ public class TrainingPane extends GraphicsPane {
                     break;
 
                 case BATTLE:
-                    monsterPreviewImage.setVisible(false);
-                    switchBackgroundToBattle();
-                    clearPreviews();
-                    mainScreen.switchToBattleScreen();
+                	if (monster.getFatigue()>7){
+                		updateDescription("Your monster is too tired!");
+                		break;
+                	}
+                	else
+                		monsterPreviewImage.setVisible(false);
+                    	switchBackgroundToBattle();
+                    	clearPreviews();
+                    	mainScreen.setBattleDifficulty(selectBattleDifficulty());
+                    	mainScreen.switchToBattleScreen();
                     break;
 
                 case BACK:
@@ -581,6 +619,7 @@ public class TrainingPane extends GraphicsPane {
 
         selectButton.setImage(button.toString());
         selectButton.setSize(selectButtonSize.getWidth(), selectButtonSize.getHeight());
+        updateModeDescription();
 
         // backgrounds
         if (button == TrainingButton.REST) switchBackgroundToRest();
@@ -609,6 +648,7 @@ public class TrainingPane extends GraphicsPane {
 
         selectButton.setImage(button.toString());
         selectButton.setSize(selectButtonSize.getWidth(), selectButtonSize.getHeight());
+        updateModeDescription();
 
         // backgrounds
         if (button == TrainingButton.REST) switchBackgroundToRest();
@@ -634,6 +674,7 @@ public class TrainingPane extends GraphicsPane {
 
         if (remaining <= 0) {
             System.out.println("Turns exhausted! Switching to battle...");
+            mainScreen.setBattleDifficulty(BattleDifficulty.BOSS);
             mainScreen.switchToBattleScreen();
         }
     }

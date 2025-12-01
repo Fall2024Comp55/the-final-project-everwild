@@ -17,7 +17,7 @@ public class BattlePane extends GraphicsPane {
     private GLabel difficultyLabel;
     private GLabel typeLabel;
     private GLabel HealthLabel;
-
+    private BattleDifficulty battleDifficulty;
 	private boolean battleStarted = false;
 
 
@@ -39,16 +39,56 @@ public class BattlePane extends GraphicsPane {
         this.playerMonster = mainScreen.getMonster();
 
         // Built-in enemy monster (you can tune stats later)
-        this.enemyMonster = new Monster(
-            0,   // fatigue
-            8,   // strength
-            3,   // agility
-            10,  // defense
-            20,  // health
-            MonsterType.ENEMY  
-        );
+        
+        
+        if (this.battleDifficulty==battleDifficulty.BABY) {
+        	this.enemyMonster = new Monster(
+                    0,   // fatigue
+                    10,   // strength
+                    10,   // agility
+                    10,  // defense
+                    20,  // health
+                    MonsterType.ENEMY  
+                );
+        }
+        
+        if (this.battleDifficulty==battleDifficulty.CHILD) {
+        	this.enemyMonster = new Monster(
+                    0,   // fatigue
+                    15,   // strength
+                    15,   // agility
+                    15,  // defense
+                    30,  // health
+                    MonsterType.ENEMY  
+                );
+        }
+        
+        if (this.battleDifficulty==battleDifficulty.NORMAL) {
+        	this.enemyMonster = new Monster(
+                    0,   // fatigue
+                    20,   // strength
+                    20,   // agility
+                    20,  // defense
+                    40,  // health
+                    MonsterType.ENEMY  
+                );
+        }
+        
+        if (this.battleDifficulty==battleDifficulty.BOSS) {
+        	this.enemyMonster = new Monster(
+                    0,   // fatigue
+                    30,   // strength
+                    30,   // agility
+                    30,  // defense
+                    50,  // health
+                    MonsterType.ENEMY  
+                );
+        }
     }
 
+    public void setBattleDifficulty(BattleDifficulty e){
+    	battleDifficulty=e;
+    }
 
     @Override
     public void showContent() {
