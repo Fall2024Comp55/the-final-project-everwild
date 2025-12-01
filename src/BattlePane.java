@@ -39,7 +39,14 @@ public class BattlePane extends GraphicsPane {
         this.playerMonster = mainScreen.getMonster();
 
         // Built-in enemy monster (you can tune stats later)
-        
+        this.enemyMonster = new Monster(
+                0,   // fatigue
+                10,   // strength
+                10,   // agility
+                10,  // defense
+                20,  // health
+                MonsterType.ENEMY  
+            );
         
         if (this.battleDifficulty==battleDifficulty.BABY) {
         	this.enemyMonster = new Monster(
