@@ -153,6 +153,10 @@ public class MainApplication extends GraphicsProgram {
     }
 
 
+    //pass difficulty to battle screen;
+    public void setBattleDifficulty(BattleDifficulty e){
+    	battlePane.setBattleDifficulty(e);
+    }
 
     // =============================================================
     // INPUT PASSTHROUGH
