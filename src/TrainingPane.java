@@ -39,6 +39,9 @@ public class TrainingPane extends GraphicsPane {
     private GImage monsterPreviewImage;
     private boolean isStrongForm = false;
     private GImage monsterAboveButtons;
+    private GImage babyBattle;
+    private GImage childBattle;
+    private GImage normalBattle;
 
     private GLabel turnLabel;
     private int turns; // store the current number of turns
@@ -199,6 +202,16 @@ public class TrainingPane extends GraphicsPane {
         mainScreen.add(leftButton);
         mainScreen.add(rightButton);
         mainScreen.add(selectButton);
+    }
+    
+    private void showBattleButtons() {
+    	babyBattle=new GImage("baby.jpeg");
+    	babyBattle.setLocation(330, 270);
+    	babyBattle.setSize(75, 50);
+    	childBattle=new GImage("child.jpeg");
+    	
+    	
+    	normalBattle=new GImage("normal.jpeg");
     }
     
     // =============================================================
@@ -476,7 +489,9 @@ public class TrainingPane extends GraphicsPane {
     // BATTLE
     // =============================================================
     private BattleDifficulty selectBattleDifficulty(){
-    	return BattleDifficulty.BABY; //TEMPORARY, ADD MOUSE CAPTURE AND DIFFICULTY BUTTON SELECT
+    	
+    	
+    	
     }
     
     

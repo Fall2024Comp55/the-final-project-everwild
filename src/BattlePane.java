@@ -19,6 +19,14 @@ public class BattlePane extends GraphicsPane {
     private GLabel HealthLabel;
     private BattleDifficulty battleDifficulty;
 	private boolean battleStarted = false;
+	
+	private GRect playerMaxHealth;
+	private GRect playerHealth;
+	private GRect enemyMaxHealth;
+	private GRect enemyHealth;
+	
+	private int playerMaxHealthInt;
+	private int enemyMaxHealthInt;
 
 
     private GImage background;
@@ -102,6 +110,7 @@ public class BattlePane extends GraphicsPane {
         System.out.println("SHOW BATTLE PANE");
 
         background = new GImage("BattleBackground.jpeg");
+        background.setColor(Color.BLUE);
         background.setLocation(0, 0);
         background.setSize(mainScreen.getWidth(), mainScreen.getHeight());
 
@@ -116,6 +125,7 @@ public class BattlePane extends GraphicsPane {
         mainScreen.add(battleButton);
         
         addBattleMonsters();
+        addHealthBars();
 
         addMonsterPreview();
         addDescriptionBox();
@@ -148,6 +158,40 @@ public class BattlePane extends GraphicsPane {
 
         mainScreen.add(playerImg);
         mainScreen.add(enemyImg);
+    }
+    
+    private void addHealthBars() {
+    	playerHealth = new GRect(200,30);
+    	playerHealth.setColor(Color.black);
+    	playerHealth.setFillColor(Color.green);
+    	playerHealth.setFilled(true);
+    	playerHealth.setLocation(95,240);
+    	playerMaxHealth = new GRect(200,30);
+    	playerMaxHealth.setColor(Color.black);
+    	playerMaxHealth.setFillColor(Color.red);
+    	playerMaxHealth.setFilled(true);
+    	playerMaxHealth.setLocation(95,240);
+    	
+    	enemyHealth = new GRect(200,30);
+    	enemyHealth.setColor(Color.black);
+    	enemyHealth.setFillColor(Color.green);
+    	enemyHealth.setFilled(true);
+    	enemyHealth.setLocation(535, 240);
+    	enemyMaxHealth = new GRect(200,30);
+    	enemyMaxHealth.setColor(Color.black);
+    	enemyMaxHealth.setFillColor(Color.red);
+    	enemyMaxHealth.setFilled(true);
+    	enemyMaxHealth.setLocation(535, 240);
+    	
+    	contents.add(playerMaxHealth);
+    	mainScreen.add(playerMaxHealth);
+    	contents.add(playerHealth);
+    	mainScreen.add(playerHealth);
+    	contents.add(enemyMaxHealth);
+    	mainScreen.add(enemyMaxHealth);
+    	contents.add(enemyHealth);
+    	mainScreen.add(enemyHealth);
+    	
     }
 
     // =============================================================
@@ -258,6 +302,8 @@ public class BattlePane extends GraphicsPane {
 
         // Start battle only when player clicks their monster
         if (clicked == playerImg && !battleStarted) {
+        	playerMaxHealthInt=this.playerMonster.getHealth();
+        	enemyMaxHealthInt=enemyMonster.getHealth();
             battleStarted = true;
             updateDescription("Combat starting! Your monster charges into battle!");
             startBattle();
@@ -270,7 +316,11 @@ public class BattlePane extends GraphicsPane {
 
                 // Move both toward each other
                 playerImg.move(4, 0);  // right
+                playerHealth.move(4, 0);
+                playerMaxHealth.move(4, 0);
                 enemyImg.move(-4, 0);  // left
+                enemyHealth.move(-4, 0);
+                enemyMaxHealth.move(-4, 0);
 
                 // Check for collision
                 if (playerImg.getBounds().intersects(enemyImg.getBounds())) {
@@ -281,7 +331,9 @@ public class BattlePane extends GraphicsPane {
 
                     // Apply damage to health
                     playerMonster.setHealth(Math.max(0, playerMonster.getHealth() - enemyDamage));
+                    playerHealth.setSize(200*playerMonster.getHealth()/playerMaxHealthInt, 30);
                     enemyMonster.setHealth(Math.max(0, enemyMonster.getHealth() - playerDamage));
+                    enemyHealth.setSize(200*enemyMonster.getHealth()/enemyMaxHealthInt,30);
 
                     // Update preview
                     updateMonsterPreview();
@@ -290,7 +342,15 @@ public class BattlePane extends GraphicsPane {
 
                     // Push them apart slightly
                     playerImg.move(-10, 0);
+                    
+                    playerHealth.move(-10, 0);
+                    playerMaxHealth.move(-10, 0);
+                    
                     enemyImg.move(10, 0);
+
+                    enemyHealth.move(10, 0);
+                    enemyMaxHealth.move(10, 0);
+
 
                     // Pause collision impact
                     mainScreen.pause(300);
