@@ -105,7 +105,7 @@ public class MainApplication extends GraphicsProgram {
         }
 
         // 2. Recreate a fresh BattlePane so it loads monsters correctly
-        battlePane = new BattlePane(this);
+        battlePane.initializeMonsters();;
 
         // 3. Switch to battle
         switchToScreen(battlePane);
@@ -156,6 +156,7 @@ public class MainApplication extends GraphicsProgram {
     //pass difficulty to battle screen;
     public void setBattleDifficulty(BattleDifficulty e){
     	battlePane.setBattleDifficulty(e);
+    	System.out.println("(main)set bat dif to: "+e);
     }
 
     // =============================================================

@@ -42,67 +42,13 @@ public class BattlePane extends GraphicsPane {
 
     public BattlePane(MainApplication mainScreen) {
         this.mainScreen = mainScreen;
-
         // Your selected monster from game
-        this.playerMonster = mainScreen.getMonster();
-
-        // Built-in enemy monster (you can tune stats later)
-        this.enemyMonster = new Monster(
-                0,   // fatigue
-                10,   // strength
-                10,   // agility
-                10,  // defense
-                20,  // health
-                MonsterType.ENEMY  
-            );
-        
-        if (this.battleDifficulty==battleDifficulty.BABY) {
-        	this.enemyMonster = new Monster(
-                    0,   // fatigue
-                    10,   // strength
-                    10,   // agility
-                    10,  // defense
-                    20,  // health
-                    MonsterType.ENEMY  
-                );
-        }
-        
-        if (this.battleDifficulty==battleDifficulty.CHILD) {
-        	this.enemyMonster = new Monster(
-                    0,   // fatigue
-                    15,   // strength
-                    15,   // agility
-                    15,  // defense
-                    30,  // health
-                    MonsterType.ENEMY  
-                );
-        }
-        
-        if (this.battleDifficulty==battleDifficulty.NORMAL) {
-        	this.enemyMonster = new Monster(
-                    0,   // fatigue
-                    20,   // strength
-                    20,   // agility
-                    20,  // defense
-                    40,  // health
-                    MonsterType.ENEMY  
-                );
-        }
-        
-        if (this.battleDifficulty==battleDifficulty.BOSS) {
-        	this.enemyMonster = new Monster(
-                    0,   // fatigue
-                    30,   // strength
-                    30,   // agility
-                    30,  // defense
-                    50,  // health
-                    MonsterType.ENEMY  
-                );
-        }
+       
     }
 
     public void setBattleDifficulty(BattleDifficulty e){
-    	battleDifficulty=e;
+    	this.battleDifficulty=e;
+    	System.out.println("current battle difficulty: "+battleDifficulty);
     }
 
     @Override
@@ -221,6 +167,63 @@ public class BattlePane extends GraphicsPane {
         }
     }
 
+    public void initializeMonsters() {
+    	 this.playerMonster = mainScreen.getMonster();
+
+         // Built-in enemy monster (you can tune stats later)
+         this.enemyMonster = new Monster(
+                 0,   // fatigue
+                 10,   // strength
+                 10,   // agility
+                 10,  // defense
+                 20,  // health
+                 MonsterType.ENEMY  
+             );
+         
+         if (this.battleDifficulty==BattleDifficulty.BABY) {
+         	this.enemyMonster = new Monster(
+                     0,   // fatigue
+                     10,   // strength
+                     10,   // agility
+                     10,  // defense
+                     20,  // health
+                     MonsterType.ENEMY  
+                 );
+         }
+         
+         if (this.battleDifficulty==BattleDifficulty.CHILD) {
+         	this.enemyMonster = new Monster(
+                     0,   // fatigue
+                     15,   // strength
+                     15,   // agility
+                     15,  // defense
+                     30,  // health
+                     MonsterType.ENEMY  
+                 );
+         }
+         
+         if (this.battleDifficulty==BattleDifficulty.NORMAL) {
+         	this.enemyMonster = new Monster(
+                     0,   // fatigue
+                     20,   // strength
+                     20,   // agility
+                     20,  // defense
+                     40,  // health
+                     MonsterType.ENEMY  
+                 );
+         }
+         
+         if (this.battleDifficulty==BattleDifficulty.BOSS) {
+         	this.enemyMonster = new Monster(
+                     0,   // fatigue
+                     30,   // strength
+                     30,   // agility
+                     30,  // defense
+                     50,  // health
+                     MonsterType.ENEMY  
+                 );
+         }
+    }
     // =============================================================
     // MONSTER PREVIEW (TOP-RIGHT)
     // =============================================================
@@ -302,6 +305,7 @@ public class BattlePane extends GraphicsPane {
 
         // Start battle only when player clicks their monster
         if (clicked == playerImg && !battleStarted) {
+        	System.out.println(battleDifficulty);
         	playerMaxHealthInt=this.playerMonster.getHealth();
         	enemyMaxHealthInt=enemyMonster.getHealth();
             battleStarted = true;
@@ -364,20 +368,33 @@ public class BattlePane extends GraphicsPane {
     }
 
     private void finishBattle() {
-        if (playerMonster.getHealth() <= 0 && enemyMonster.getHealth() <= 0) {
-            updateDescription("Both monsters fainted! It's a draw!");
-            mainScreen.switchToWinScreen(false); // treat draw as lose or create a draw screen
-        } 
-        else if (playerMonster.getHealth() <= 0) {
-            updateDescription("Your monster fainted... you lost the battle!");
-            mainScreen.switchToWinScreen(false); // lose
-        } 
-        else {
-            updateDescription("You won! The enemy monster fainted!");
-            mainScreen.switchToWinScreen(true); // win
-        }
+    	if(battleDifficulty==BattleDifficulty.BOSS) {
+    		if (playerMonster.getHealth() <= 0 && enemyMonster.getHealth() <= 0) {
+    			updateDescription("Both monsters fainted! It's a draw!");
+    			mainScreen.switchToWinScreen(false); // treat draw as lose or create a draw screen
+    		} 
+    		else if (playerMonster.getHealth() <= 0) {
+    			updateDescription("Your monster fainted... you lost the battle!");
+    			mainScreen.switchToWinScreen(false); // lose
+    		} 
+    		else {
+    			updateDescription("The enemy monster fainted! You won the Championship!");
+    			mainScreen.switchToWinScreen(true); // win
+    		}
 
-        battleStarted = false;
+    		battleStarted = false;
+    	}
+    	
+    	else {
+    		
+    		
+    		
+    		
+    		
+    		mainScreen.setMonster(playerMonster);
+    		mainScreen.switchToTrainingScreen(playerMonster);
+    	}
+    	
     }
 
 

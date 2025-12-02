@@ -206,12 +206,21 @@ public class TrainingPane extends GraphicsPane {
     
     private void showBattleButtons() {
     	babyBattle=new GImage("baby.jpeg");
-    	babyBattle.setLocation(330, 270);
+    	babyBattle.setLocation(230, 270);
     	babyBattle.setSize(75, 50);
     	childBattle=new GImage("child.jpeg");
-    	
-    	
+    	childBattle.setLocation(330, 270);
+    	childBattle.setSize(75, 50);
     	normalBattle=new GImage("normal.jpeg");
+    	normalBattle.setLocation(430, 270);
+    	normalBattle.setSize(75, 50);
+    	
+    	mainScreen.add(babyBattle);
+    	contents.add(babyBattle);
+    	mainScreen.add(childBattle);
+    	contents.add(childBattle);
+    	mainScreen.add(normalBattle);
+    	contents.add(normalBattle);
     }
     
     // =============================================================
@@ -484,16 +493,6 @@ public class TrainingPane extends GraphicsPane {
         updateMonsterPreview();
     }
 
-
-    // =============================================================
-    // BATTLE
-    // =============================================================
-    private BattleDifficulty selectBattleDifficulty(){
-    	
-    	
-    	
-    }
-    
     
     // =============================================================
     // MODE DESCRIPTION
@@ -599,8 +598,7 @@ public class TrainingPane extends GraphicsPane {
                 		monsterPreviewImage.setVisible(false);
                     	switchBackgroundToBattle();
                     	clearPreviews();
-                    	mainScreen.setBattleDifficulty(selectBattleDifficulty());
-                    	mainScreen.switchToBattleScreen();
+                    	showBattleButtons();
                     break;
 
                 case BACK:
@@ -613,6 +611,22 @@ public class TrainingPane extends GraphicsPane {
 
             selectButton.setSize(selectButtonSize.getWidth(), selectButtonSize.getHeight());
 
+        }
+        
+        if (clicked==babyBattle) {
+
+        	mainScreen.setBattleDifficulty(BattleDifficulty.BABY);
+        	mainScreen.switchToBattleScreen();
+        }
+        if (clicked==childBattle) {
+
+        	mainScreen.setBattleDifficulty(BattleDifficulty.CHILD);
+        	mainScreen.switchToBattleScreen();
+        }
+        if (clicked==normalBattle) {
+
+        	mainScreen.setBattleDifficulty(BattleDifficulty.NORMAL);
+        	mainScreen.switchToBattleScreen();
         }
     }
 
@@ -690,6 +704,8 @@ public class TrainingPane extends GraphicsPane {
         if (remaining <= 0) {
             System.out.println("Turns exhausted! Switching to battle...");
             mainScreen.setBattleDifficulty(BattleDifficulty.BOSS);
+
+        	System.out.println("(train)set bat dif to: "+BattleDifficulty.BOSS);
             mainScreen.switchToBattleScreen();
         }
     }
