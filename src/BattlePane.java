@@ -179,7 +179,7 @@ public class BattlePane extends GraphicsPane {
         if (hasWon)
         	descriptionLabel2.setLabel("Your monster can keep fighting this turn! (click anywhere to return to training)");
         else 
-        	descriptionLabel2.setLabel("Your monster fainted! "+ mainScreen.getTurnsRemaining() +" turns remaining. (click anywhere to return to training)");
+        	descriptionLabel2.setLabel("Your monster can't continue this turn! "+ mainScreen.getTurnsRemaining() +" turns remaining. (click anywhere to return to training)");
         contents.add(descriptionLabel2);
         mainScreen.add(descriptionLabel2);
     	

@@ -407,12 +407,9 @@ public class TrainingPane extends GraphicsPane {
         if (d == Difficulty.BABY) {
             monster.setStrength(oldS + 2);
             monster.setFatigue(oldF + 1);
-        } else if (d == Difficulty.CHILD) {
+        } else {
             monster.setStrength(oldS + 1);
             monster.setFatigue(oldF + 1);
-        } else {
-            if (Math.random() < 0.75) monster.setStrength(oldS + 1);
-            monster.setFatigue(oldF + 2);
         }
         decrementTurns();
         updateDescriptionWithTurns("Your monster trained Strength!"); 
@@ -432,13 +429,10 @@ public class TrainingPane extends GraphicsPane {
         if (d == Difficulty.BABY) {
             monster.setSpeed(oldA + 2);
             monster.setFatigue(oldF + 1);
-        } else if (d == Difficulty.CHILD) {
+        } else{
             monster.setSpeed(oldA + 1);
             monster.setFatigue(oldF + 1);
-        } else {
-            if (Math.random() < 0.75) monster.setSpeed(oldA + 1);
-            monster.setFatigue(oldF + 2);
-        }
+        } 
         decrementTurns();
         updateDescriptionWithTurns("Your monster trained Agility!");
 
@@ -457,13 +451,10 @@ public class TrainingPane extends GraphicsPane {
         if (d == Difficulty.BABY) {
             monster.setDefense(oldD + 2);
             monster.setFatigue(oldF + 1);
-        } else if (d == Difficulty.CHILD) {
+        } else {
             monster.setDefense(oldD + 1);
             monster.setFatigue(oldF + 1);
-        } else {
-            if (Math.random() < 0.75) monster.setDefense(oldD + 1);
-            monster.setFatigue(oldF + 2);
-        }
+        } 
         decrementTurns();
         updateDescriptionWithTurns("Your monster trained Defense!");
 
