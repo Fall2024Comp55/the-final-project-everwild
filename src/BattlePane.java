@@ -351,65 +351,69 @@ public class BattlePane extends GraphicsPane {
             		playerImg.move(4, 0);  // right
                 	playerHealth.move(4, 0);
                 	playerMaxHealth.move(4, 0);
+                	if (playerImg.getBounds().intersects(enemyImg.getBounds()))
+                		break;
             	}
             	for (int i = 0; i < enemyOverPlayerAgility; ++i) {
             		enemyImg.move(-4, 0);  // left
             		enemyHealth.move(-4, 0);
                 	enemyMaxHealth.move(-4, 0);
+                	if (playerImg.getBounds().intersects(enemyImg.getBounds()))
+                		break;
         		}
 
                 // Check for collision
                 if (playerImg.getBounds().intersects(enemyImg.getBounds())) {
 
                     // Calculate damage
-                    int playerDamage = Math.max(1, playerMonster.getStrength() - enemyMonster.getDefense());
-                    int enemyDamage  = Math.max(1, enemyMonster.getStrength() - playerMonster.getDefense());
-
-            		int playerCritCheck = (int)(Math.random() * 100) + 1;
-            		int enemyCritCheck = (int)(Math.random() * 100) + 1;
-            		if (playerCritCheck<= playerMonster.getSpeed()) {
-            			playerDamage*=2;
-                    	updateDescription("Your monster did more damage!");
-                    	enemyImg.setImage("ENEMYCrit.png");
-                        enemyImg.setSize(220, 200);
-                        mainScreen.pause(200);
-                    	enemyImg.setImage("ENEMY.png");
-                        enemyImg.setSize(220, 200);
-            		}
-            		if (enemyCritCheck<= enemyMonster.getSpeed()&&mainScreen.getDifficulty()!=Difficulty.BABY) {
-            			enemyDamage*=2;
-                		updateDescription("The enemy monster did more damage!");
-                		playerImg.setImage(playerMonster.getCritImage());
-                        playerImg.setSize(220, 200);
-                        mainScreen.pause(200);
-                        playerImg.setImage(playerMonster.getBattleImage()); 
-                        playerImg.setSize(220, 200);
-            		}
-            		int playerDodgeCheck =  (int)(Math.random() * 100) + 1;
-            		int enemyDodgeCheck =  (int)(Math.random() * 100) + 1;
-
-            		
-                    // Apply damage to health
-            		if (playerDodgeCheck > Math.min(20, playerMonster.getSpeed())) {
-            			playerTempHealth= (Math.max(0,playerTempHealth - enemyDamage));
-            			playerHealth.setSize(200*playerTempHealth/playerMaxHealthInt, 30);
-            		}
-            		else {
-            			updateDescription("Your monster dodged!");
-            			playerImg.move(-20, 0);
-                        mainScreen.pause(200);
-            			playerImg.move(20, 0);
-					}
-            		if (enemyDodgeCheck > Math.min(20, enemyMonster.getSpeed()) ) {
-            			enemyTempHealth=(Math.max(0,enemyTempHealth - playerDamage));
-            			enemyHealth.setSize(200*enemyTempHealth/enemyMaxHealthInt,30);
-            		}
-            		else {
-            			updateDescription("The enemy monster dodged!");
-            			enemyImg.move(20,0);
-                        mainScreen.pause(200);
-                        enemyImg.move(-20, 0);
-					}
+                	for (int i =0; i<playerOverEnemyAgility; ++i) {
+                		int playerDamage = Math.max(1, playerMonster.getStrength() - enemyMonster.getDefense());
+                		int playerCritCheck = (int)(Math.random() * 100) + 1;
+                		if (playerCritCheck<= playerMonster.getSpeed()) {
+                			playerDamage*=2;
+                			updateDescription("Your monster did more damage!");
+                			enemyImg.setImage("ENEMYCrit.png");
+                    		enemyImg.setSize(220, 200);
+                    		mainScreen.pause(200);
+                        	enemyImg.setImage("ENEMY.png");
+                        	enemyImg.setSize(220, 200);
+                		}
+                		int enemyDodgeCheck =  (int)(Math.random() * 100) + 1;
+                		if (enemyDodgeCheck > Math.min(20, enemyMonster.getSpeed()) ) {
+                			enemyTempHealth=(Math.max(0,enemyTempHealth - playerDamage));
+                			enemyHealth.setSize(200*enemyTempHealth/enemyMaxHealthInt,30);
+                		}
+                		else {
+                			updateDescription("The enemy monster dodged!");
+                			enemyImg.move(20,0);
+            				mainScreen.pause(200);
+            				enemyImg.move(-20, 0);
+                		}
+                	}
+                	for (int i = 0; i < enemyOverPlayerAgility; ++i) {
+                    	int enemyDamage  = Math.max(1, enemyMonster.getStrength() - playerMonster.getDefense());
+                    	int enemyCritCheck = (int)(Math.random() * 100) + 1;          		
+                    	if (enemyCritCheck<= enemyMonster.getSpeed()&&mainScreen.getDifficulty()!=Difficulty.BABY) {
+                    		enemyDamage*=2;
+                    		updateDescription("The enemy monster did more damage!");
+                			playerImg.setImage(playerMonster.getCritImage());
+                			playerImg.setSize(220, 200);
+                			mainScreen.pause(200);
+                			playerImg.setImage(playerMonster.getBattleImage()); 
+                			playerImg.setSize(220, 200);
+                    	}
+                    	int playerDodgeCheck =  (int)(Math.random() * 100) + 1;
+                    	if (playerDodgeCheck > Math.min(20, playerMonster.getSpeed())) {
+                    		playerTempHealth= (Math.max(0,playerTempHealth - enemyDamage));
+                    		playerHealth.setSize(200*playerTempHealth/playerMaxHealthInt, 30);
+                    	}
+                    	else {
+                    		updateDescription("Your monster dodged!");
+                    		playerImg.move(-20, 0);
+                    		mainScreen.pause(200);
+                    		playerImg.move(20, 0);
+                    	}
+                	}
 
                     // Update preview
                     updateMonsterPreview();
