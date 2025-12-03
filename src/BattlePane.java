@@ -343,14 +343,20 @@ public class BattlePane extends GraphicsPane {
     private void startBattle() {
         new Thread(() -> {
             while (playerTempHealth > 0 && enemyTempHealth > 0) {
+            	int playerOverEnemyAgility =Math.max(1,playerMonster.getSpeed()/enemyMonster.getSpeed()); 
+            	int enemyOverPlayerAgility = Math.max(1, 1/playerOverEnemyAgility);
 
                 // Move both toward each other
-                playerImg.move(4, 0);  // right
-                playerHealth.move(4, 0);
-                playerMaxHealth.move(4, 0);
-                enemyImg.move(-4, 0);  // left
-                enemyHealth.move(-4, 0);
-                enemyMaxHealth.move(-4, 0);
+            	for (int i =0; i<playerOverEnemyAgility; ++i) {
+            		playerImg.move(4, 0);  // right
+                	playerHealth.move(4, 0);
+                	playerMaxHealth.move(4, 0);
+            	}
+            	for (int i = 0; i < enemyOverPlayerAgility; ++i) {
+            		enemyImg.move(-4, 0);  // left
+            		enemyHealth.move(-4, 0);
+                	enemyMaxHealth.move(-4, 0);
+        		}
 
                 // Check for collision
                 if (playerImg.getBounds().intersects(enemyImg.getBounds())) {
@@ -364,12 +370,20 @@ public class BattlePane extends GraphicsPane {
             		if (playerCritCheck<= playerMonster.getSpeed()) {
             			playerDamage*=2;
                     	updateDescription("Your monster did more damage!");
-                        mainScreen.pause(150);
+                    	enemyImg.setImage("ENEMYCrit.png");
+                        enemyImg.setSize(220, 200);
+                        mainScreen.pause(200);
+                    	enemyImg.setImage("ENEMY.png");
+                        enemyImg.setSize(220, 200);
             		}
             		if (enemyCritCheck<= enemyMonster.getSpeed()&&mainScreen.getDifficulty()!=Difficulty.BABY) {
             			enemyDamage*=2;
                 		updateDescription("The enemy monster did more damage!");
-                        mainScreen.pause(150);
+                		playerImg.setImage(playerMonster.getCritImage());
+                        playerImg.setSize(220, 200);
+                        mainScreen.pause(200);
+                        playerImg.setImage(playerMonster.getBattleImage()); 
+                        playerImg.setSize(220, 200);
             		}
             		int playerDodgeCheck =  (int)(Math.random() * 100) + 1;
             		int enemyDodgeCheck =  (int)(Math.random() * 100) + 1;
@@ -382,7 +396,9 @@ public class BattlePane extends GraphicsPane {
             		}
             		else {
             			updateDescription("Your monster dodged!");
-                        mainScreen.pause(150);
+            			playerImg.move(-20, 0);
+                        mainScreen.pause(200);
+            			playerImg.move(20, 0);
 					}
             		if (enemyDodgeCheck > Math.min(20, enemyMonster.getSpeed()) ) {
             			enemyTempHealth=(Math.max(0,enemyTempHealth - playerDamage));
@@ -390,7 +406,9 @@ public class BattlePane extends GraphicsPane {
             		}
             		else {
             			updateDescription("The enemy monster dodged!");
-                        mainScreen.pause(150);
+            			enemyImg.move(20,0);
+                        mainScreen.pause(200);
+                        enemyImg.move(-20, 0);
 					}
 
                     // Update preview

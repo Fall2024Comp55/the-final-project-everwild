@@ -1,3 +1,4 @@
+
 public class Monster {
     private int fatigue, strength, speed, defense, health;
     private MonsterType monsterType;
@@ -67,5 +68,13 @@ public class Monster {
             case CLAYGUY:   return "BattleCuteMonster.png";
         }
         return "";
+    }
+    public String getCritImage() {
+    	switch(monsterType) {
+    		case BILLABONG: return "BuffBongCrit.png";
+    		case SOCKGUY: return "ChildSleep.png";
+    		case CLAYGUY: return "BattleCuteMonsterCrit.png";
+    	}
+    	return "";
     }
 }
