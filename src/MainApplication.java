@@ -104,8 +104,9 @@ public class MainApplication extends GraphicsProgram {
             trainingPane.hideContent();
         }
 
-        // 2. Recreate a fresh BattlePane so it loads monsters correctly
-        battlePane.initializeMonsters();;
+        // 2. Recreate a fresh BattlePane so it loads monsters 
+        // changed to just re grabbing the correct monsters 
+        battlePane.initializeMonsters();
 
         // 3. Switch to battle
         switchToScreen(battlePane);

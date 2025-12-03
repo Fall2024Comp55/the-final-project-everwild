@@ -10,6 +10,9 @@ public class BattlePane extends GraphicsPane {
 	private Monster playerMonster;
 	private Monster enemyMonster;
 	
+	private int playerTempHealth;
+	private int enemyTempHealth;
+	
     private GLabel strengthLabel;
     private GLabel speedLabel;
     private GLabel defenseLabel;
@@ -19,6 +22,7 @@ public class BattlePane extends GraphicsPane {
     private GLabel HealthLabel;
     private BattleDifficulty battleDifficulty;
 	private boolean battleStarted = false;
+	private boolean battleFinished = false;
 	
 	private GRect playerMaxHealth;
 	private GRect playerHealth;
@@ -35,6 +39,7 @@ public class BattlePane extends GraphicsPane {
     // Description box (bottom-left)
     private GRect descriptionBox;
     private GLabel descriptionLabel;
+    private GLabel descriptionLabel2;
 
     // Monster preview (top-right)
     private GRect monsterPreviewBox;
@@ -166,27 +171,43 @@ public class BattlePane extends GraphicsPane {
             descriptionLabel.setLabel(text);
         }
     }
+    
+    private void addSecondDescription(boolean hasWon) {
+    	descriptionLabel2 = new GLabel("", descriptionLabel.getX(),descriptionLabel.getY()+20);
+        descriptionLabel2.setFont("Arial-16");
+        descriptionLabel2.setColor(Color.WHITE);
+        if (hasWon)
+        	descriptionLabel2.setLabel("Your monster can keep fighting this turn! (click anywhere to return to training)");
+        else 
+        	descriptionLabel2.setLabel("Your monster fainted! "+ mainScreen.getTurnsRemaining() +" turns remaining. (click anywhere to return to training)");
+        contents.add(descriptionLabel2);
+        mainScreen.add(descriptionLabel2);
+    	
+    }
 
     public void initializeMonsters() {
+
+		 battleStarted = false;
+		 battleFinished = false;
     	 this.playerMonster = mainScreen.getMonster();
 
          // Built-in enemy monster (you can tune stats later)
          this.enemyMonster = new Monster(
                  0,   // fatigue
-                 10,   // strength
-                 10,   // agility
-                 10,  // defense
-                 20,  // health
+                 5,   // strength
+                 5,   // agility
+                 5,  // defense
+                 15,  // health
                  MonsterType.ENEMY  
              );
          
          if (this.battleDifficulty==BattleDifficulty.BABY) {
          	this.enemyMonster = new Monster(
                      0,   // fatigue
-                     10,   // strength
-                     10,   // agility
-                     10,  // defense
-                     20,  // health
+                     7,   // strength
+                     5,   // agility
+                     7,  // defense
+                     15,  // health
                      MonsterType.ENEMY  
                  );
          }
@@ -195,7 +216,7 @@ public class BattlePane extends GraphicsPane {
          	this.enemyMonster = new Monster(
                      0,   // fatigue
                      15,   // strength
-                     15,   // agility
+                     10,   // agility
                      15,  // defense
                      30,  // health
                      MonsterType.ENEMY  
@@ -206,7 +227,7 @@ public class BattlePane extends GraphicsPane {
          	this.enemyMonster = new Monster(
                      0,   // fatigue
                      20,   // strength
-                     20,   // agility
+                     10,   // agility
                      20,  // defense
                      40,  // health
                      MonsterType.ENEMY  
@@ -217,12 +238,15 @@ public class BattlePane extends GraphicsPane {
          	this.enemyMonster = new Monster(
                      0,   // fatigue
                      30,   // strength
-                     30,   // agility
+                     20,   // agility
                      30,  // defense
                      50,  // health
                      MonsterType.ENEMY  
                  );
          }
+         
+         playerTempHealth=playerMonster.getHealth();
+         enemyTempHealth=enemyMonster.getHealth();
     }
     // =============================================================
     // MONSTER PREVIEW (TOP-RIGHT)
@@ -290,7 +314,7 @@ public class BattlePane extends GraphicsPane {
         strengthLabel.setLabel("STR: " + playerMonster.getStrength());
         speedLabel.setLabel("AGI: " + playerMonster.getSpeed());
         defenseLabel.setLabel("DEF: " + playerMonster.getDefense());
-        HealthLabel.setLabel("HP: " + playerMonster.getHealth());
+        HealthLabel.setLabel("HP: " + playerTempHealth);
         fatigueLabel.setLabel("FAT: " + playerMonster.getFatigue());
     }
 
@@ -301,7 +325,9 @@ public class BattlePane extends GraphicsPane {
     @Override
     public void mouseClicked(MouseEvent e) {
         GObject clicked = mainScreen.getElementAtLocation(e.getX(), e.getY());
-        if (clicked == null) return;
+        if (battleFinished) {
+    		mainScreen.switchToTrainingScreen(playerMonster);
+        }
 
         // Start battle only when player clicks their monster
         if (clicked == playerImg && !battleStarted) {
@@ -316,7 +342,7 @@ public class BattlePane extends GraphicsPane {
 
     private void startBattle() {
         new Thread(() -> {
-            while (playerMonster.getHealth() > 0 && enemyMonster.getHealth() > 0) {
+            while (playerTempHealth > 0 && enemyTempHealth > 0) {
 
                 // Move both toward each other
                 playerImg.move(4, 0);  // right
@@ -333,16 +359,43 @@ public class BattlePane extends GraphicsPane {
                     int playerDamage = Math.max(1, playerMonster.getStrength() - enemyMonster.getDefense());
                     int enemyDamage  = Math.max(1, enemyMonster.getStrength() - playerMonster.getDefense());
 
+            		int playerCritCheck = (int)(Math.random() * 100) + 1;
+            		int enemyCritCheck = (int)(Math.random() * 100) + 1;
+            		if (playerCritCheck<= playerMonster.getSpeed()) {
+            			playerDamage*=2;
+                    	updateDescription("Your monster did more damage!");
+                        mainScreen.pause(150);
+            		}
+            		if (enemyCritCheck<= enemyMonster.getSpeed()&&mainScreen.getDifficulty()!=Difficulty.BABY) {
+            			enemyDamage*=2;
+                		updateDescription("The enemy monster did more damage!");
+                        mainScreen.pause(150);
+            		}
+            		int playerDodgeCheck =  (int)(Math.random() * 100) + 1;
+            		int enemyDodgeCheck =  (int)(Math.random() * 100) + 1;
+
+            		
                     // Apply damage to health
-                    playerMonster.setHealth(Math.max(0, playerMonster.getHealth() - enemyDamage));
-                    playerHealth.setSize(200*playerMonster.getHealth()/playerMaxHealthInt, 30);
-                    enemyMonster.setHealth(Math.max(0, enemyMonster.getHealth() - playerDamage));
-                    enemyHealth.setSize(200*enemyMonster.getHealth()/enemyMaxHealthInt,30);
+            		if (playerDodgeCheck > Math.min(20, playerMonster.getSpeed())) {
+            			playerTempHealth= (Math.max(0,playerTempHealth - enemyDamage));
+            			playerHealth.setSize(200*playerTempHealth/playerMaxHealthInt, 30);
+            		}
+            		else {
+            			updateDescription("Your monster dodged!");
+                        mainScreen.pause(150);
+					}
+            		if (enemyDodgeCheck > Math.min(20, enemyMonster.getSpeed()) ) {
+            			enemyTempHealth=(Math.max(0,enemyTempHealth - playerDamage));
+            			enemyHealth.setSize(200*enemyTempHealth/enemyMaxHealthInt,30);
+            		}
+            		else {
+            			updateDescription("The enemy monster dodged!");
+                        mainScreen.pause(150);
+					}
 
                     // Update preview
                     updateMonsterPreview();
 
-                    updateDescription("They collided!");
 
                     // Push them apart slightly
                     playerImg.move(-10, 0);
@@ -358,6 +411,7 @@ public class BattlePane extends GraphicsPane {
 
                     // Pause collision impact
                     mainScreen.pause(300);
+                    updateDescription("");
                 }
 
                 mainScreen.pause(40);
@@ -369,11 +423,11 @@ public class BattlePane extends GraphicsPane {
 
     private void finishBattle() {
     	if(battleDifficulty==BattleDifficulty.BOSS) {
-    		if (playerMonster.getHealth() <= 0 && enemyMonster.getHealth() <= 0) {
+    		if (playerTempHealth <= 0 && enemyTempHealth<= 0) {
     			updateDescription("Both monsters fainted! It's a draw!");
     			mainScreen.switchToWinScreen(false); // treat draw as lose or create a draw screen
     		} 
-    		else if (playerMonster.getHealth() <= 0) {
+    		else if (playerTempHealth <= 0) {
     			updateDescription("Your monster fainted... you lost the battle!");
     			mainScreen.switchToWinScreen(false); // lose
     		} 
@@ -381,20 +435,59 @@ public class BattlePane extends GraphicsPane {
     			updateDescription("The enemy monster fainted! You won the Championship!");
     			mainScreen.switchToWinScreen(true); // win
     		}
-
-    		battleStarted = false;
     	}
     	
     	else {
-    		
-    		
-    		
-    		
-    		
+    		int difficultyModifier = 0;
+    		System.out.println(battleDifficulty);
+    		if (battleDifficulty==BattleDifficulty.BABY) {
+    			difficultyModifier=1;
+    		}
+    		if (battleDifficulty==BattleDifficulty.CHILD) {
+    			difficultyModifier=2;
+    		}
+    		if (battleDifficulty == BattleDifficulty.NORMAL) {
+    			difficultyModifier=3;
+    		}
+    		System.out.println("difficulty int" +difficultyModifier);
+    		if (playerTempHealth <= 0 && enemyTempHealth <= 0) {
+    			mainScreen.setTurnsRemaining(mainScreen.getTurnsRemaining()-1);
+    			updateDescription("Both monsters fainted! It's a draw! Gained "+(difficultyModifier+1)+" fatigue. Your monster seems determined after that tie.");
+    			addSecondDescription(false);
+    			playerMonster.setFatigue(playerMonster.getFatigue()+difficultyModifier+1);
+    			playerMonster.setHealth(playerMonster.getHealth()+difficultyModifier+1);
+    		} 
+    		else if (playerTempHealth <= 0) {
+    			mainScreen.setTurnsRemaining(mainScreen.getTurnsRemaining()-1);
+    			updateDescription("Your monster fainted... Gained "+(difficultyModifier*2)+" fatigue. Your monster seems tougher after that beatdown.");   
+    			addSecondDescription(false);
+    			playerMonster.setFatigue(playerMonster.getFatigue()+difficultyModifier*2);
+    			playerMonster.setHealth(playerMonster.getHealth()+difficultyModifier+1);
+    			} 
+    		else {
+    			updateDescription("The enemy monster fainted! You won the battle! Gained "+(difficultyModifier+1)+" fatigue. Your monster seems stronger now.");
+    			addSecondDescription(true);
+    			playerMonster.setFatigue(playerMonster.getFatigue()+difficultyModifier+1);
+    			playerMonster.setHealth(playerMonster.getHealth()+difficultyModifier+1);
+    			increaseStats(difficultyModifier);
+    		}
+
+    		battleFinished=true;
     		mainScreen.setMonster(playerMonster);
-    		mainScreen.switchToTrainingScreen(playerMonster);
     	}
     	
+    }
+    
+    private void increaseStats(int n) {
+    	for (int i =0; i<n;++i ) {
+    		int randomNum = (int)(Math.random() * 3);
+    		if (randomNum == 0)
+    			playerMonster.setDefense(playerMonster.getDefense()+1);
+    		if (randomNum == 1)
+    			playerMonster.setStrength(playerMonster.getStrength()+1);
+    		else 
+    			playerMonster.setSpeed(playerMonster.getSpeed()+1);
+    	}
     }
 
 
