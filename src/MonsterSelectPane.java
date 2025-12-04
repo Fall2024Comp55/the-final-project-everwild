@@ -26,11 +26,11 @@ public class MonsterSelectPane extends GraphicsPane {
 
     private void addMonsters() {
         monster1 = new GImage("Billabong.png", 50, 200);
-        monster2 = new GImage("Child.jpeg", 400, 250);
+        monster2 = new GImage("sockHappy.png", 450, 300);
         monster3 = new GImage("CuteMonster.png", 650, 250);
 
         monster1.scale(0.17);
-        monster2.scale(0.5);
+        monster2.scale(0.08);
         monster3.scale(0.5);
 
         mainScreen.add(monster1);

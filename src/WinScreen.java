@@ -6,7 +6,6 @@ public class WinScreen extends GraphicsPane {
     private MainApplication program;
     private GImage screen;
 
-    private boolean waitingForClick = true;
 
     public WinScreen(MainApplication app, boolean playerWon) {
         this.program = app;
@@ -24,16 +23,6 @@ public class WinScreen extends GraphicsPane {
     public void showContent() {
         program.add(screen);
 
-        // Wait 3 seconds, but ONLY if user has not clicked yet
-        new Thread(() -> {
-            try {
-                Thread.sleep(3000);
-            } catch (Exception e) {}
-
-            if (waitingForClick) {
-                goBackToTraining();
-            }
-        }).start();
     }
 
     @Override
@@ -43,11 +32,8 @@ public class WinScreen extends GraphicsPane {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        waitingForClick = false;
-        goBackToTraining();
+    	program.switchToStartScreen();
     }
 
-    private void goBackToTraining() {
-        program.switchToTrainingPane();
-    }
+    
 }

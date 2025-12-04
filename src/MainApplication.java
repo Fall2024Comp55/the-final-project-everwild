@@ -124,6 +124,10 @@ public class MainApplication extends GraphicsProgram {
     public void switchToDifficultyScreen() {
         switchToScreen(difficultyPane);
     }
+    
+    public void switchToStartScreen() {
+    	switchToScreen(startPane);
+    }
 
 
     //// >>> NEW: TRAINING SCREEN WITH MONSTER PASSED IN

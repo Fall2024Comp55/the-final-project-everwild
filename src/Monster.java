@@ -38,7 +38,7 @@ public class Monster {
     public String getNormalImage() {
         switch (monsterType) {
             case BILLABONG: return "Billabong.png";
-            case SOCKGUY:   return "Child.jpeg";
+            case SOCKGUY:   return "sockNormal.png";
             case CLAYGUY:   return "CuteMonster.png";
         }
         return "";
@@ -47,7 +47,7 @@ public class Monster {
     public String getStrongImage() {
         switch (monsterType) {
             case BILLABONG: return "Buffbong.png";
-            case SOCKGUY:   return "ChildStrong.png";
+            case SOCKGUY:   return "sockBuff.png";
             case CLAYGUY:   return "StrongerCuteMonster.png";
         }
         return "";
@@ -56,7 +56,7 @@ public class Monster {
     public String getSleepImage() {
         switch (monsterType) {
             case BILLABONG: return "TiredBillabong.png";
-            case SOCKGUY:   return "ChildSleep.png";
+            case SOCKGUY:   return "sockSleep.png";
             case CLAYGUY:   return "SleepCuteMonster.png";
         }
         return "";
@@ -64,7 +64,7 @@ public class Monster {
     public String getBattleImage() {
         switch (monsterType) {
             case BILLABONG: return "BuffBong.png";
-            case SOCKGUY:   return "ChildSleep.png";
+            case SOCKGUY:   return "sockCombat.png";
             case CLAYGUY:   return "BattleCuteMonster.png";
         }
         return "";
@@ -72,7 +72,7 @@ public class Monster {
     public String getCritImage() {
     	switch(monsterType) {
     		case BILLABONG: return "BuffBongCrit.png";
-    		case SOCKGUY: return "ChildSleep.png";
+    		case SOCKGUY: return "sockCrit.png";
     		case CLAYGUY: return "BattleCuteMonsterCrit.png";
     	}
     	return "";
