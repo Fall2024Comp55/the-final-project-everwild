@@ -40,6 +40,7 @@ public class Monster {
             case BILLABONG: return "Billabong.png";
             case SOCKGUY:   return "sockNormal.png";
             case CLAYGUY:   return "CuteMonster.png";
+            case SECRET: 	return "redbong.png";
         }
         return "";
     }
@@ -49,6 +50,7 @@ public class Monster {
             case BILLABONG: return "Buffbong.png";
             case SOCKGUY:   return "sockBuff.png";
             case CLAYGUY:   return "StrongerCuteMonster.png";
+            case SECRET: 	return "redbong.png";
         }
         return "";
     }
@@ -58,6 +60,7 @@ public class Monster {
             case BILLABONG: return "TiredBillabong.png";
             case SOCKGUY:   return "sockSleep.png";
             case CLAYGUY:   return "SleepCuteMonster.png";
+            case SECRET: 	return "redbong.png";
         }
         return "";
     }
@@ -66,6 +69,7 @@ public class Monster {
             case BILLABONG: return "BuffBong.png";
             case SOCKGUY:   return "sockCombat.png";
             case CLAYGUY:   return "BattleCuteMonster.png";
+            case SECRET: 	return "redbong.png";
         }
         return "";
     }
@@ -74,6 +78,7 @@ public class Monster {
     		case BILLABONG: return "BuffBongCrit.png";
     		case SOCKGUY: return "sockCrit.png";
     		case CLAYGUY: return "BattleCuteMonsterCrit.png";
+            case SECRET: 	return "redbong.png";
     	}
     	return "";
     }

@@ -1,9 +1,9 @@
 import java.security.PrivateKey;
 
 public enum Difficulty {
-	BABY(80),
-	CHILD(50),
-	NORMAL(20);
+	BABY(30),
+	CHILD(20),
+	NORMAL(10);
 	
 	private final int turns;
 	private Difficulty(int turns) {

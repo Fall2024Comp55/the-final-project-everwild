@@ -211,28 +211,28 @@ public class BattlePane extends GraphicsPane {
 
 		if (this.battleDifficulty == BattleDifficulty.CHILD) {
 			this.enemyMonster = new Monster(0, // fatigue
-					15, // strength
+					12, // strength
 					10, // agility
-					15, // defense
-					30, // health
+					12, // defense
+					20, // health
 					MonsterType.ENEMY);
 		}
 
 		if (this.battleDifficulty == BattleDifficulty.NORMAL) {
 			this.enemyMonster = new Monster(0, // fatigue
-					20, // strength
+					16, // strength
 					10, // agility
-					20, // defense
-					40, // health
+					16, // defense
+					30, // health
 					MonsterType.ENEMY);
 		}
 
 		if (this.battleDifficulty == BattleDifficulty.BOSS) {
 			this.enemyMonster = new Monster(0, // fatigue
-					30, // strength
+					20, // strength
 					20, // agility
-					30, // defense
-					50, // health
+					20, // defense
+					40, // health
 					MonsterType.ENEMY);
 		}
 

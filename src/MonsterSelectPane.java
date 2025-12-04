@@ -6,6 +6,7 @@ public class MonsterSelectPane extends GraphicsPane {
     private GImage monster1;
     private GImage monster2;
     private GImage monster3;
+    private GImage secretMonster;
 
     public MonsterSelectPane(MainApplication mainScreen) {
         this.mainScreen = mainScreen;
@@ -28,18 +29,23 @@ public class MonsterSelectPane extends GraphicsPane {
         monster1 = new GImage("Billabong.png", 50, 200);
         monster2 = new GImage("sockHappy.png", 450, 300);
         monster3 = new GImage("CuteMonster.png", 650, 250);
+        secretMonster = new GImage("redbong.png",675,200);
+        
 
         monster1.scale(0.17);
         monster2.scale(0.08);
         monster3.scale(0.5);
+        secretMonster.scale(.01);
 
         mainScreen.add(monster1);
         mainScreen.add(monster2);
         mainScreen.add(monster3);
+        mainScreen.add(secretMonster);
 
         contents.add(monster1);
         contents.add(monster2);
         contents.add(monster3);
+        contents.add(secretMonster);
     }
 
     @Override
@@ -72,6 +78,10 @@ public class MonsterSelectPane extends GraphicsPane {
             selectedMonster = createMonster(MonsterType.CLAYGUY);
             selectedMonster.setImagePath("CuteMonster.png");
         }
+        else if (clicked==secretMonster) {
+            selectedMonster = createMonster(MonsterType.SECRET);
+            selectedMonster.setImagePath("redbong.png");
+        }
 
         if (selectedMonster != null) {
             mainScreen.setMonster(selectedMonster);  
@@ -84,9 +94,9 @@ public class MonsterSelectPane extends GraphicsPane {
             case BILLABONG:
                 return new Monster(
                     0,   // fatigue
-                    5,   // strength
-                    4,   // speed
-                    6,   // defense
+                    7,   // strength
+                    3,   // speed
+                    10,   // defense
                     20,  // health
                     type
                 );
@@ -94,9 +104,9 @@ public class MonsterSelectPane extends GraphicsPane {
             case SOCKGUY:
                 return new Monster(
                     0,
-                    3,
-                    7,
-                    3,
+                    5,
+                    12,
+                    5,
                     18,
                     type
                 );
@@ -104,12 +114,14 @@ public class MonsterSelectPane extends GraphicsPane {
             case CLAYGUY:
                 return new Monster(
                     0,
-                    6,
-                    3,
+                    10,
+                    8,
                     5,
-                    22,
+                    17,
                     type
                 );
+            case SECRET:
+            	return new Monster(0, 100, 100, 100, 500, type); 
         }
         return null;
     }

@@ -469,7 +469,7 @@ public class TrainingPane extends GraphicsPane {
     private void RestMonster() {
 
         int oldF = monster.getFatigue();
-        int newF = oldF - 2;
+        int newF = oldF - 4;
         if (newF < 0) newF = 0;
 
         monster.setFatigue(newF);
