@@ -206,14 +206,14 @@ public class TrainingPane extends GraphicsPane {
     
     private void showBattleButtons() {
     	babyBattle=new GImage("baby.jpeg");
-    	babyBattle.setLocation(230, 270);
-    	babyBattle.setSize(75, 50);
+    	babyBattle.setLocation(190, 120);
+    	babyBattle.setSize(120, 50);
     	childBattle=new GImage("child.jpeg");
-    	childBattle.setLocation(330, 270);
-    	childBattle.setSize(75, 50);
+    	childBattle.setLocation(320, 120);
+    	childBattle.setSize(120, 50);
     	normalBattle=new GImage("normal.jpeg");
-    	normalBattle.setLocation(430, 270);
-    	normalBattle.setSize(75, 50);
+    	normalBattle.setLocation(455, 120);
+    	normalBattle.setSize(120, 50);
     	
     	mainScreen.add(babyBattle);
     	contents.add(babyBattle);
