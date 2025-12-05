@@ -18,7 +18,6 @@ public class TurnsPane extends GraphicsPane{
 	@Override
 	public void showContent() {
 		addBackground();
-		addTurnCount();
 	}
 
 	@Override
@@ -30,21 +29,29 @@ public class TurnsPane extends GraphicsPane{
 	}
 	
 	private void addBackground() {
-		background=new GImage("tempTurnScreen.png");
-		mainScreen.add(background);
-		contents.add(background);
+	    String imgPath = mainScreen.getDifficulty().getBackgroundImage();
+	    background = new GImage(imgPath);
+
+	    double screenW = mainScreen.getWidth();
+	    double screenH = mainScreen.getHeight();
+
+	    double imgW = background.getWidth();
+	    double imgH = background.getHeight();
+
+	    double scale = Math.max(screenW / imgW, screenH / imgH);
+
+	    double newW = imgW * scale;
+	    double newH = imgH * scale;
+
+	    background.setSize(newW, newH);
+
+	    double x = (screenW - newW) / 2.0;
+	    double y = (screenH - newH) / 2.0;
+	    background.setLocation(x, y);
+
+	    mainScreen.add(background);
+	    contents.add(background);
 	}
-	
-	private void addTurnCount() {
-		turnCount = new GLabel(""+mainScreen.getTurnsRemaining(), 450, 500);
-		System.out.println(mainScreen.getTurnsRemaining());
-		turnCount.setFont("papyrus");
-		turnCount.setColor(Color.black);
-		turnCount.scale(3);
-		mainScreen.add(turnCount);
-		contents.add(turnCount);
-	}
-	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if(mainScreen.getTurnsRemaining()>0)
